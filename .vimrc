@@ -22,8 +22,8 @@ nnoremap ; :
 inoremap jj <ESC>
 
 " Font, encoding and colorscheme
-set background=dark
-colorscheme solarized
+" set background=dark
+" colorscheme solarized
 set encoding=utf-8
 "set guifont=Anonymous\ Pro:h11
 

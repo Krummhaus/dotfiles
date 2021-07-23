@@ -22,8 +22,8 @@ nnoremap ; :
 inoremap jj <ESC>
 
 " Font, encoding and colorscheme
-" set background=dark
-" colorscheme solarized
+set background=dark
+"colorscheme solarized
 set encoding=utf-8
 "set guifont=Anonymous\ Pro:h11
 
@@ -44,11 +44,11 @@ noremap <silent> ,cc :<C-B>silent <C-E>s/^/<C-R>=escape(b:comment_leader,'\/')<C
 noremap <silent> ,cv :<C-B>silent <C-E>s/^\V<C-R>=escape(b:comment_leader,'\/')<CR>//e<CR>:nohlsearch<CR>
 
 " Set 'Yank' to go in systm Clipboard and Ctrl-C to Vim 'p' command
-"set clipboard=unnamed
+set clipboard=unnamed
 
-" Remaping CAPSLOCK to END at start of VIM --UNIX ONLY
-"au VimEnter * !xmodmap -e 'clear Lock' -e 'keycode 0x42 = End'
-"au VimLeave * !xmodmap -e 'clear Lock' -e 'keycode 0x42 = Caps_Lock'
+" WSL2 clipboard support
+" ???
+
 
 " Tmux & Vim panel switching integration
 " https://www.codeography.com/2013/06/19/navigating-vim-and-tmux-splits

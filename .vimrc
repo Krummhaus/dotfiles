@@ -5,13 +5,46 @@ set nocompatible
 " Automatic syntax recognition
 syntax enable
 
-filetype plugin indent on
+filetype off "required for Vundle
 
 set noswapfile
 set relativenumber
 "set number
+set the runtime path to include Vundle and initialize
 
+" ----------------------------------------------------------
+" Plugin manager
+" ----------------------------------------------------------
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+" let Vundle manage Vundle, required
+Plugin 'gmarik/Vundle.vim'
+Plugin 'tmhedberg/SimpylFold'
+Plugin 'vim-scripts/indentpython.vim'
+
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
+filetype plugin indent on    " required
+
+" ----------------------------------------------------------
+" Python PEP 8
+" ----------------------------------------------------------
+au BufNewFile,BufRead *.py
+    \ set tabstop=4
+    \ set softtabstop=4
+    \ set shiftwidth=4
+    \ set textwidth=79
+    \ set expandtab
+    \ set autoindent
+    \ set fileformat=unix
+
+" Flagging unecessary white-spaces
+au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
+
+" ----------------------------------------------------------
 " MAP LEADER
+" ----------------------------------------------------------
 "let mapleader = ","
 let mapleader = "\<Space>"
 noremap <leader>w :w<cr>
@@ -30,7 +63,17 @@ set encoding=utf-8
 nmap <F3> i<C-R>=strftime("%d-%m-%Y %a %H:%M")<CR><Esc>
 imap <F3> <C-R>=strftime("%d-%m-%Y %a %H:%M")<CR>
 
+" ----------------------------------------------------------
+" enable folding like in ide
+" ----------------------------------------------------------
+set foldmethod=indent
+set foldlevel=99
+" Enables folding with spacebar
+nnoremap <space> za
+
+" ----------------------------------------------------------
 " Commenting blocks of code.
+" ----------------------------------------------------------
 augroup commenting_blocks_of_code
   autocmd!
   autocmd FileType c,cpp,java,scala let b:comment_leader = '// '
@@ -43,15 +86,19 @@ augroup END
 noremap <silent> ,cc :<C-B>silent <C-E>s/^/<C-R>=escape(b:comment_leader,'\/')<CR>/<CR>:nohlsearch<CR>
 noremap <silent> ,cv :<C-B>silent <C-E>s/^\V<C-R>=escape(b:comment_leader,'\/')<CR>//e<CR>:nohlsearch<CR>
 
+" ----------------------------------------------------------
 " Set 'Yank' to go in systm Clipboard and Ctrl-C to Vim 'p' command
+" ----------------------------------------------------------
 set clipboard=unnamed
 
 " WSL2 clipboard support
 " ???
 
 
+" ----------------------------------------------------------
 " Tmux & Vim panel switching integration
 " https://www.codeography.com/2013/06/19/navigating-vim-and-tmux-splits
+" ----------------------------------------------------------
 if exists('$TMUX')
 function! TmuxOrSplitSwitch(wincmd, tmuxdir)
 let previous_winnr = winnr()

@@ -10,7 +10,6 @@ filetype off "required for Vundle
 set noswapfile
 set relativenumber
 "set number
-set the runtime path to include Vundle and initialize
 
 " ----------------------------------------------------------
 " Plugin manager
@@ -31,16 +30,17 @@ filetype plugin indent on    " required
 " Python PEP 8
 " ----------------------------------------------------------
 au BufNewFile,BufRead *.py
-    \ set tabstop=4
-    \ set softtabstop=4
-    \ set shiftwidth=4
-    \ set textwidth=79
-    \ set expandtab
-    \ set autoindent
-    \ set fileformat=unix
+    \ set tabstop=4 |
+    \ set softtabstop=4 |
+    \ set shiftwidth=4 |
+    \ set textwidth=79 |
+    \ set expandtab |
+    \ set autoindent |
+    \ set fileformat=unix 
 
 " Flagging unecessary white-spaces
 au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
+highlight BadWhitespace ctermbg=red
 
 " ----------------------------------------------------------
 " MAP LEADER

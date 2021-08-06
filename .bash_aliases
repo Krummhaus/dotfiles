@@ -2,10 +2,15 @@
 alias mous='bash <(curl -s http://www.nicknorton.net/mousewheel.sh)'
 alias off='shutdown -P now'
 alias smi='watch -n 0.5 nvidia-smi'
+alias cl='clear'
+# listing files | directories
+alias ll='ls -alF'
+alias la='ls -A'
+alias l='ls -CF'
 
 # SSH
 alias ev='eval `ssh-agent`'
-alias ad='ssh-add ~/.ssh/'
+# alias ad='ssh-add ~/.ssh/' # moved to .bashrc as function ad()
 
 # GIT
 alias gs='git status'

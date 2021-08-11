@@ -21,4 +21,5 @@ alias ga='git add'
 # DOCKER
 alias dp='docker ps'
 alias dpa='docker ps -a'
+alias di='docker images'
 

@@ -22,4 +22,6 @@ alias ga='git add'
 alias dp='docker ps'
 alias dpa='docker ps -a'
 alias di='docker images'
+alias dri='docker rmi -f'
+alias drm='docker rm'
 

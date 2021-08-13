@@ -6,9 +6,11 @@
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
 
-# settings for Xserver
-export DISPLAY=$(awk '/nameserver / {print $2; exit}' /etc/resolv.conf 2>/dev/null):0 # in WSL 2
-export LIBGL_ALWAYS_INDIRECT=1 
+# settings for Xserver --- replaced with x11docker on windows
+# https://github.com/mviereck/runx
+# export DISPLAY=$(awk '/nameserver / {print $2; exit}' /etc/resolv.conf 2>/dev/null):0 # in WSL 2
+# export LIBGL_ALWAYS_INDIRECT=1 
+source /usr/local/bin/runx
 
 # Set VIM keybindings to bash
 set -o vi

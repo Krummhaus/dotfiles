@@ -24,4 +24,5 @@ alias dpa='docker ps -a'
 alias di='docker images'
 alias dri='docker rmi -f'
 alias drm='docker rm'
+alias db='docker build -t'
 

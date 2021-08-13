@@ -5,28 +5,10 @@ set nocompatible
 " Automatic syntax recognition
 syntax enable
 
-filetype off "required for Vundle
 
 set noswapfile
-set relativenumber
-"set number
-
-" ----------------------------------------------------------
-" Plugin manager
-" ----------------------------------------------------------
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-
-" let Vundle manage Vundle, required
-Plugin 'gmarik/Vundle.vim'
-Plugin 'tmhedberg/SimpylFold'
-Plugin 'vim-scripts/indentpython.vim'
-Plugin 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
-
-
-" All of your Plugins must be added before the following line
-call vundle#end()            " required
-filetype plugin indent on    " required
+"set relativenumber
+set number
 
 " ----------------------------------------------------------
 " Python PEP 8
@@ -64,14 +46,6 @@ set encoding=utf-8
 
 nmap <F3> i<C-R>=strftime("%d-%m-%Y %a %H:%M")<CR><Esc>
 imap <F3> <C-R>=strftime("%d-%m-%Y %a %H:%M")<CR>
-
-" ----------------------------------------------------------
-" enable folding like in ide
-" ----------------------------------------------------------
-set foldmethod=indent
-set foldlevel=99
-" Enables folding with spacebar
-nnoremap <space> za
 
 " ----------------------------------------------------------
 " Commenting blocks of code.

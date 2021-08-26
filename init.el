@@ -89,6 +89,30 @@
   :init (doom-modeline-mode 1)
   :custom ((doom-modeline-height 15)))
 
+
+;; --------------------------------------------------------------
+;; PYTHON - IDE
+;; --------------------------------------------------------------
+(use-package python-mode
+  :ensure t
+  ;:hook (python-mode . lsp-deferred)
+  :custom
+  ;; NOTE: Set these if Python 3 is called "python3" on your system!
+  (python-shell-interpreter "python3")
+  ;(dap-python-executable "python3")
+  ;(dap-python-debugger 'debugpy)
+  ;:config
+  ;(require 'dap-python))
+  )
+
+;; Python Language Server
+(use-package lsp-python-ms
+  :ensure t
+  :init (setq lsp-python-ms-auto-install-server t)
+  :hook (python-mode . (lambda ()
+                          (require 'lsp-python-ms)
+                          (lsp))))  ; or lsp-deferred
+
 ;; --------------------------------------------------------------
 (custom-set-variables
  ;; custom-set-variables was added by Custom.

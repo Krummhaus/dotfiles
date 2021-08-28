@@ -7,6 +7,7 @@ alias cl='clear'
 alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
+alias em='emacs -nw'
 
 # SSH
 alias ev='eval `ssh-agent`'

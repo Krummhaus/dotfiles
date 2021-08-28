@@ -57,6 +57,8 @@
   :config
   (evil-mode 1))
 
+(setq-default evil-escape-key-sequence "jj")
+
 ;; --------------------------------------------------------------
 ;; Ivy - autocomplete -- https://oremacs.com/swiper/#installation
 ;; requires counsel to be installed

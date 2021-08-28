@@ -25,7 +25,7 @@
   (add-hook mode (lambda () (display-line-number-mode 0))))
 
 ;; Column nubers
-(column-number-mode)
+;; (column-number-mode)
 
 ;; Make ESC quit prompts
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
@@ -33,9 +33,16 @@
 ;; Initialize package sources
 (require 'package)
 
-(setq package-archives '(("melpa" . "https://melpa.org/packages/")
-                         ("org" . "https://orgmode.org/elpa/")
-                         ("elpa" . "https://elpa.gnu.org/packages/")))
+(setq package-archives
+      '(("GNU ELPA"     . "https://elpa.gnu.org/packages/")
+        ("MELPA Stable" . "https://stable.melpa.org/packages/")
+	("ORG" . "https://orgmode.org/elpa/")
+        ("MELPA"        . "https://melpa.org/packages/"))
+      package-archive-priorities
+      '(("MELPA Stable" . 10)
+        ("GNU ELPA"     . 5)
+        ("ORG"     . 2)
+        ("MELPA"        . 0)))
 
 (package-initialize)
 (unless package-archive-contents
@@ -48,6 +55,13 @@
 (require 'use-package)
 (setq use-package-always-ensure t)
 
+
+;; Hint package
+(use-package which-key
+  :init (which-key-mode)
+  :diminish which-key-mode
+  :config
+  (setq which-key-idle-delay 0.3))
 
 ;; --------------------------------------------------------------
 ;; EVIL - MODE --> Vim key bindings
@@ -77,28 +91,26 @@
 (define-key evil-replace-state-map "j" 'xwl-jj-as-esc)
 
 ;; --------------------------------------------------------------
-;; Ivy - autocomplete -- https://oremacs.com/swiper/#installation
-;; requires counsel to be installed
-;; M-x package-install RET counsel RET
+;; HELM for navigation
 ;; --------------------------------------------------------------
-(use-package counsel)
-(use-package ivy
-  :diminish
-  :bind (("C-s" . swiper)
-         :map ivy-minibuffer-map
-         ("TAB" . ivy-alt-done)	
-         ("C-l" . ivy-alt-done)
-         ("C-j" . ivy-next-line)
-         ("C-k" . ivy-previous-line)
-         :map ivy-switch-buffer-map
-         ("C-k" . ivy-previous-line)
-         ("C-l" . ivy-done)
-         ("C-d" . ivy-switch-buffer-kill)
-         :map ivy-reverse-i-search-map
-         ("C-k" . ivy-previous-line)
-         ("C-d" . ivy-reverse-i-search-kill))
-  :config
-  (ivy-mode 1))
+(use-package helm
+  :init
+    (require 'helm-config)
+    (setq helm-split-window-in-side-p t
+          helm-move-to-line-cycle-in-source t)
+  :config 
+    (helm-mode 1) ;; Most of Emacs prompts become helm-enabled
+    (helm-autoresize-mode 1) ;; Helm resizes according to the number of candidates
+    (global-set-key (kbd "C-x b") 'helm-buffers-list) ;; List buffers ( Emacs way )
+    (define-key evil-ex-map "b" 'helm-buffers-list) ;; List buffers ( Vim way )
+    (global-set-key (kbd "C-x r b") 'helm-bookmarks) ;; Bookmarks menu
+    (global-set-key (kbd "C-x C-f") 'helm-find-files) ;; Finding files with Helm
+    (global-set-key (kbd "M-c") 'helm-calcul-expression) ;; Use Helm for calculations
+    (global-set-key (kbd "C-s") 'helm-occur)  ;; Replaces the default isearch keybinding
+    (global-set-key (kbd "C-h a") 'helm-apropos)  ;; Helmized apropos interface
+    (global-set-key (kbd "M-x") 'helm-M-x)  ;; Improved M-x menu
+    (global-set-key (kbd "M-y") 'helm-show-kill-ring)  ;; Show kill ring, pick something to paste
+  :ensure t)
 
 ;; --------------------------------------------------------------
 ;; STATUS LINE

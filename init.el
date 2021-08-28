@@ -57,7 +57,24 @@
   :config
   (evil-mode 1))
 
-(setq-default evil-escape-key-sequence "jj")
+(defun xwl-jj-as-esc ()
+  (interactive)
+  (if (memq evil-state '(insert replace))
+      (let ((changed? (buffer-modified-p)))
+          (insert "j")
+          (let* ((tm (current-time))
+                 (ch (read-key)))
+            (if (and (eq ch ?j)
+                     (< (time-to-seconds (time-since tm)) 0.5))
+                (save-excursion
+                  (delete-char -1)
+                  (evil-force-normal-state)
+                  (set-buffer-modified-p changed?))
+              (insert ch))))
+    (call-interactively 'evil-next-line)))
+
+(define-key evil-insert-state-map  "j" 'xwl-jj-as-esc)
+(define-key evil-replace-state-map "j" 'xwl-jj-as-esc)
 
 ;; --------------------------------------------------------------
 ;; Ivy - autocomplete -- https://oremacs.com/swiper/#installation

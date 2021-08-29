@@ -64,6 +64,18 @@
   (setq which-key-idle-delay 0.3))
 
 ;; --------------------------------------------------------------
+;; Magit - GIT
+;; --------------------------------------------------------------
+(use-package magit
+  :ensure t)
+
+(use-package evil-collection
+  :ensure t
+  :after evil
+  :init
+  (evil-collection-init))
+
+;; --------------------------------------------------------------
 ;; EVIL - MODE --> Vim key bindings
 ;; --------------------------------------------------------------
 (use-package evil
@@ -110,6 +122,11 @@
     (global-set-key (kbd "C-h a") 'helm-apropos)  ;; Helmized apropos interface
     (global-set-key (kbd "M-x") 'helm-M-x)  ;; Improved M-x menu
     (global-set-key (kbd "M-y") 'helm-show-kill-ring)  ;; Show kill ring, pick something to paste
+    (define-key helm-map (kbd "C-j") 'helm-next-line)
+    (define-key helm-map (kbd "C-k") 'helm-previous-line)
+    (define-key helm-map (kbd "C-h") 'helm-next-source)
+    (define-key helm-map (kbd "C-S-h") 'describe-key)
+    (define-key helm-map (kbd "C-l") (kbd "RET"))
   :ensure t)
 
 ;; --------------------------------------------------------------
@@ -122,27 +139,19 @@
 
 
 ;; --------------------------------------------------------------
-;; PYTHON - IDE
+;; Projectile
 ;; --------------------------------------------------------------
-(use-package python-mode
-  :ensure t
-  ;:hook (python-mode . lsp-deferred)
-  :custom
-  ;; NOTE: Set these if Python 3 is called "python3" on your system!
-  (python-shell-interpreter "python3")
-  ;(dap-python-executable "python3")
-  ;(dap-python-debugger 'debugpy)
-  ;:config
-  ;(require 'dap-python))
-  )
+(unless (package-installed-p 'projectile)
+  (package-install 'projectile))
 
-;; Python Language Server
-(use-package lsp-python-ms
+
+;; --------------------------------------------------------------
+;; PYTHON
+;; --------------------------------------------------------------
+(use-package elpy
   :ensure t
-  :init (setq lsp-python-ms-auto-install-server t)
-  :hook (python-mode . (lambda ()
-                          (require 'lsp-python-ms)
-                          (lsp))))  ; or lsp-deferred
+  :init
+  (elpy-enable))
 
 ;; --------------------------------------------------------------
 (custom-set-variables

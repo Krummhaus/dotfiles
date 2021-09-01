@@ -1,5 +1,5 @@
 ;; --------------------------------------------------------------
-;; INITIAL MINIMAL SETTIGS
+;; Dislabling menu bar
 ;; --------------------------------------------------------------
 (setq inhibit-startup-message t)
 
@@ -10,26 +10,9 @@
 
 (menu-bar-mode -1)            ; Disable the menu bar
 
-;; Set up the visible bell
-(setq visible-bell t)
-
-;; Theme on start-up
-(load-theme 'wombat)
-
-;; Line-numbers
-(global-display-line-numbers-mode t)
-;; Disable numbering for some modes
-(dolist (mode '(org-mode-hook
-		term-mode-hook
-		eshell-mode-hook))
-  (add-hook mode (lambda () (display-line-number-mode 0))))
-
-;; Column nubers
-;; (column-number-mode)
-
-;; Make ESC quit prompts
-(global-set-key (kbd "<escape>") 'keyboard-escape-quit)
-
+;; --------------------------------------------------------------
+;; Package inicialize
+;; --------------------------------------------------------------
 ;; Initialize package sources
 (require 'package)
 
@@ -55,7 +38,6 @@
 (require 'use-package)
 (setq use-package-always-ensure t)
 
-
 ;; Hint package
 (use-package which-key
   :init (which-key-mode)
@@ -64,16 +46,75 @@
   (setq which-key-idle-delay 0.3))
 
 ;; --------------------------------------------------------------
+;; INITIAL MINIMAL SETTIGS
+;; --------------------------------------------------------------
+
+;; Set up the visible bell
+(setq visible-bell t)
+
+;; Theme on start-up
+;; wombat-theme
+(load-theme 'wombat)
+
+;; Line-numbers
+(global-display-line-numbers-mode t)
+;; Disable numbering for some modes
+(dolist (mode '(org-mode-hook
+		term-mode-hook
+		eshell-mode-hook))
+  (add-hook mode (lambda () (display-line-number-mode 0))))
+
+;; Column nubers
+;; (column-number-mode)
+
+;; Make ESC quit prompts
+(global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+
+;; getting rid of the "yes or no" prompt and replace it with "y or n"
+(defalias 'yes-or-no-p 'y-or-n-p)
+
+;; disable confirmation if a file or buffer does not exist when you
+;; use C-x C-f or C-x b
+(setq confirm-nonexistent-file-or-buffer nil)
+
+;; disable confirmation when kill a buffer with a live process
+;; attached to it
+(setq kill-buffer-query-functions
+  (remq 'process-kill-buffer-query-function
+        kill-buffer-query-functions))
+
+;; store all backup and autosave files in the tmp dir
+(setq backup-directory-alist
+      `((".*" . ,temporary-file-directory)))
+(setq auto-save-file-name-transforms
+      `((".*" ,temporary-file-directory t)))
+
+;; confirm to quit
+(setq confirm-kill-emacs #'y-or-n-p)
+
+
+;; --------------------------------------------------------------
+;; org-mode
+;; --------------------------------------------------------------
+(setq-default org-display-custom-times t)
+(setq org-time-stamp-custom-formats 
+  '("<%d %b %Y %a" . "<%d %b %Y %a %H:%M>"))
+
+;; --------------------------------------------------------------
+;; dockerfile-mode
+;; --------------------------------------------------------------
+(use-package dockerfile-mode
+  :ensure t)
+
+;; --------------------------------------------------------------
 ;; Magit - GIT
 ;; --------------------------------------------------------------
 (use-package magit
-  :ensure t)
-
-(use-package evil-collection
   :ensure t
-  :after evil
-  :init
-  (evil-collection-init))
+  :config
+  (setq magit-completing-read-function 'ivy-completing-read)
+  :diminish auto-revert-mode)
+
 
 ;; --------------------------------------------------------------
 ;; EVIL - MODE --> Vim key bindings
@@ -102,31 +143,47 @@
 (define-key evil-insert-state-map  "j" 'xwl-jj-as-esc)
 (define-key evil-replace-state-map "j" 'xwl-jj-as-esc)
 
-;; --------------------------------------------------------------
-;; HELM for navigation
-;; --------------------------------------------------------------
-(use-package helm
+(use-package evil-collection
+  :ensure t
+  :after evil
   :init
-    (require 'helm-config)
-    (setq helm-split-window-in-side-p t
-          helm-move-to-line-cycle-in-source t)
-  :config 
-    (helm-mode 1) ;; Most of Emacs prompts become helm-enabled
-    (helm-autoresize-mode 1) ;; Helm resizes according to the number of candidates
-    (global-set-key (kbd "C-x b") 'helm-buffers-list) ;; List buffers ( Emacs way )
-    (define-key evil-ex-map "b" 'helm-buffers-list) ;; List buffers ( Vim way )
-    (global-set-key (kbd "C-x r b") 'helm-bookmarks) ;; Bookmarks menu
-    (global-set-key (kbd "C-x C-f") 'helm-find-files) ;; Finding files with Helm
-    (global-set-key (kbd "M-c") 'helm-calcul-expression) ;; Use Helm for calculations
-    (global-set-key (kbd "C-s") 'helm-occur)  ;; Replaces the default isearch keybinding
-    (global-set-key (kbd "C-h a") 'helm-apropos)  ;; Helmized apropos interface
-    (global-set-key (kbd "M-x") 'helm-M-x)  ;; Improved M-x menu
-    (global-set-key (kbd "M-y") 'helm-show-kill-ring)  ;; Show kill ring, pick something to paste
-    (define-key helm-map (kbd "C-j") 'helm-next-line)
-    (define-key helm-map (kbd "C-k") 'helm-previous-line)
-    (define-key helm-map (kbd "C-h") 'helm-next-source)
-    (define-key helm-map (kbd "C-S-h") 'describe-key)
-    (define-key helm-map (kbd "C-l") (kbd "RET"))
+  (evil-collection-init))
+
+;; --------------------------------------------------------------
+;; Ivy, Counsel and Projectile
+;; --------------------------------------------------------------
+
+;; ivy
+(use-package ivy
+  :diminish
+  :bind (("C-s" . swiper)
+         :map ivy-minibuffer-map
+         ("TAB" . ivy-alt-done)	
+         ("C-l" . ivy-alt-done)
+         ("C-j" . ivy-next-line)
+         ("C-k" . ivy-previous-line)
+         :map ivy-switch-buffer-map
+         ("C-k" . ivy-previous-line)
+         ("C-l" . ivy-done)
+         ("C-d" . ivy-switch-buffer-kill)
+         :map ivy-reverse-i-search-map
+         ("C-k" . ivy-previous-line)
+         ("C-d" . ivy-reverse-i-search-kill))
+  :config
+  (ivy-mode 1))
+
+;; projectile
+(use-package projectile
+  :ensure t
+  :config
+  (projectile-global-mode)
+  (setq projectile-mode-line
+        '(:eval (format " [%s]" (projectile-project-name))))
+  (setq projectile-remember-window-configs t)
+  (setq projectile-completion-system 'ivy))
+
+;; counsel
+(use-package counsel
   :ensure t)
 
 ;; --------------------------------------------------------------
@@ -135,15 +192,7 @@
 (use-package doom-modeline
   :ensure t
   :init (doom-modeline-mode 1)
-  :custom ((doom-modeline-height 15)))
-
-
-;; --------------------------------------------------------------
-;; Projectile
-;; --------------------------------------------------------------
-(unless (package-installed-p 'projectile)
-  (package-install 'projectile))
-
+  :custom ((doom-modeline-height 9)))
 
 ;; --------------------------------------------------------------
 ;; PYTHON
@@ -159,6 +208,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(helm-minibuffer-history-key "M-p")
  '(package-selected-packages (quote (counsel use-package ivy evil))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

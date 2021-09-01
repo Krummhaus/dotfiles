@@ -3,11 +3,16 @@ alias mous='bash <(curl -s http://www.nicknorton.net/mousewheel.sh)'
 alias off='shutdown -P now'
 alias smi='watch -n 0.5 nvidia-smi'
 alias cl='clear'
+
 # listing files | directories
 alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
 alias em='emacs -nw'
+
+# Calendar
+alias cal='nacl -Mb'
+
 
 # SSH
 alias ev='eval `ssh-agent`'

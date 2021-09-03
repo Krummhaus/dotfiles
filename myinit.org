@@ -130,13 +130,13 @@ Operators that deal with indentation ( < and > ) also indent headers.
    '(("h" "Daily habits"
       ((agenda ""))
       ((org-agenda-show-log t)
-       (org-agenda-ndays 7)
+       (org-agenda-ndays 1)
        (org-agenda-log-mode-items '(state))
        (org-agenda-skip-function '(org-agenda-skip-entry-if 'notregexp ":DAILY:"))))))
 #+END_SRC
 
 #+RESULTS:
-| h | Daily habits | ((agenda )) | ((org-agenda-show-log t) (org-agenda-ndays 7) (org-agenda-log-mode-items (quote (state))) (org-agenda-skip-function (quote (org-agenda-skip-entry-if (quote notregexp) :DAILY:)))) |
+| h | Daily habits | ((agenda )) | ((org-agenda-show-log t) (org-agenda-ndays 1) (org-agenda-log-mode-items (quote (state))) (org-agenda-skip-function (quote (org-agenda-skip-entry-if (quote notregexp) :DAILY:)))) |
 
 ** Org-babel
 #+BEGIN_SRC emacs-lisp
@@ -149,19 +149,28 @@ Operators that deal with indentation ( < and > ) also indent headers.
 
 ** Org-roam
 #+BEGIN_SRC emacs-lisp
-(use-package org-roam
-  :ensure t
-  :custom
-  (org-roam-directory (file-truename "~/roam"))
-  :bind (("C-c n l" . org-roam-buffer-toggle)
-         ("C-c n f" . org-roam-node-find)
-         ("C-c n g" . org-roam-graph)
-         ("C-c n i" . org-roam-node-insert)
-         ("C-c n c" . org-roam-capture)
-         ;; Dailies
-         ("C-c n j" . org-roam-dailies-capture-today))
-  :config
-  (org-roam-db-autosync-mode)
-  ;; If using org-roam-protocol
-  (require 'org-roam-protocol))
+  (use-package org-roam
+    :ensure t
+    :init
+    (setq org-roam-v2-ack t)
+    :custom
+   (org-roam-directory (file-truename "~/roam"))
+    :bind (("C-c n l" . org-roam-buffer-toggle)
+           ("C-c n f" . org-roam-node-find)
+           ("C-c n g" . org-roam-graph)
+           ("C-c n i" . org-roam-node-insert)
+           ("C-c n c" . org-roam-capture)
+           ;; Dailies
+           ("C-c n j" . org-roam-dailies-capture-today))
+    :config
+    (org-roam-db-autosync-mode)
+    ;; If using org-roam-protocol
+    (require 'org-roam-protocol))
+#+END_SRC
+* My custom functions
+** Timestamp
+#+BEGIN_SRC emacs-lisp
+(defun now ()
+  (interactive) ; permits invocation in minibufer
+  (insert (format-time-string "%e.%-m.%Y %a %H:%M")))
 #+END_SRC

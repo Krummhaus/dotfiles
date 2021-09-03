@@ -1,4 +1,4 @@
-#+STARTUP: overview 
+#+STARTUP:overview 
 * Interface Tweaks
 ** Startup, general settings
 #+BEGIN_SRC emacs-lisp
@@ -144,6 +144,33 @@ Operators that deal with indentation ( < and > ) also indent headers.
 
 #+RESULTS:
 | h | Daily habits | ((agenda )) | ((org-agenda-show-log t) (org-agenda-ndays 1) (org-agenda-log-mode-items (quote (state))) (org-agenda-skip-function (quote (org-agenda-skip-entry-if (quote notregexp) :DAILY:)))) |
+
+** Block templates
+These templates enable you to type things like <el and then hit Tab to expand the template. More documentation can be found at the Org Mode Easy Templates documentation page.
+#+BEGIN_SRC emacs-lisp
+;; This is needed as of Org 9.2
+(require 'org-tempo)
+(add-to-list 'org-structure-template-alist '("sh" . "src sh"))
+(add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp"))
+(add-to-list 'org-structure-template-alist '("sc" . "src scheme"))
+(add-to-list 'org-structure-template-alist '("ts" . "src typescript"))
+(add-to-list 'org-structure-template-alist '("py" . "src python"))
+(add-to-list 'org-structure-template-alist '("go" . "src go"))
+(add-to-list 'org-structure-template-alist '("yaml" . "src yaml"))
+(add-to-list 'org-structure-template-alist '("json" . "src json"))
+#+END_SRC
+
+#+RESULTS:
+: ((json . src json) (yaml . src yaml) (go . src go) (py . src python) (ts . src typescript) (sc . src scheme) (el . src emacs-lisp) (sh . src sh) (a . export ascii) (c . center) (C . comment) (e . example) (E . export) (h . export html) (l . export latex) (q . quote) (s . src) (v . verse))
+
+** Org-mode
+#+BEGIN_SRC emacs-lisp
+(use-package org
+  :ensure t
+  :config
+  (setq org-agenda-files
+  '("~/org/tasks.org"))
+#+END_SRC
 
 ** Org-babel
 #+BEGIN_SRC emacs-lisp

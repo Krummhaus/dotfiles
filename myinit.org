@@ -34,7 +34,9 @@
   ;; Make ESC quit prompts
   (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
   (fset 'yes-or-no-p 'y-or-n-p)
-  (setenv "HOME" "/home/mlboy/")
+  ;; Define variable for user
+  (defvar user (getenv "USER"))
+  (setenv "HOME" (format "/home/%s/" user))
 #+END_SRC
 
 #+RESULTS:

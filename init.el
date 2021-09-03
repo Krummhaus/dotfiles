@@ -1,5 +1,8 @@
 ;; --------------------------------------------------------------
-(setq user-emacs-directory "/home/mlboy/.emacs.d")
+;; Resolve user as variable
+(defvar user (getenv "USER"))
+
+(setq user-emacs-directory (format "/home/%s/.emacs.d" user))
 (require 'package)
 
 (setq package-archives
@@ -53,7 +56,8 @@
 (define-key evil-replace-state-map "j" 'xwl-jj-as-esc)
 
 ;; Change to the path where you cloned the config to
-(org-babel-load-file "/home/mlboy/.emacs.d/myinit.org")
+(org-babel-load-file (format "/home/%s/.emacs.d/myinit.org" user))
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

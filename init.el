@@ -56,7 +56,7 @@
 (define-key evil-replace-state-map "j" 'xwl-jj-as-esc)
 
 ;; Change to the path where you cloned the config to
-(org-babel-load-file (format "/home/%s/.emacs.d/myinit.org" user))
+(org-babel-load-file (format "/home/%s/.emacs.d/init_1.org" user))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.

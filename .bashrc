@@ -118,3 +118,8 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
+
+# set oracle home at the end of the file
+export ORACLE_HOME=/opt/oracle/instantclient_12_2
+export LD_LIBRARY_PATH=$ORACLE_HOME:$LD_LIBRARY_PATH
+export PATH=$ORACLE_HOME:$PATH

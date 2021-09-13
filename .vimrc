@@ -5,10 +5,31 @@ set nocompatible
 " Automatic syntax recognition
 syntax enable
 
+" Font, encoding and colorscheme
+set t_Co=256
+set term=xterm
+" set t_ut=""
+set background=dark
+"colorscheme solarized
+set encoding=utf-8
+"set guifont=Anonymous\ Pro:h11
+
 
 set noswapfile
 "set relativenumber
 set number
+
+" ----------------------------------------------------------
+" Status-line
+" ----------------------------------------------------------
+set laststatus=2        " Always display a statusline.
+set noruler             " Since I'm using a statusline, disable ruler.
+set statusline=%<%f                          " Path to the file in the buffer.
+set statusline+=\ %h%w%m%r%k                 " Flags (e.g. [+], [RO]).
+set statusline+=\ [%{(&fenc\ ==\"\"?&enc:&fenc).(&bomb?\",BOM\":\"\")},%{&ff}] " Encoding and line endings.
+set statusline+=\ %y                         " File type.
+set statusline+=\ [\%03.3b,0x\%02.2B,U+%04B] " Codes of the character under cursor.
+set statusline+=\ [%l/%L\ (%p%%),%v]         " Line and column numbers.
 
 " ----------------------------------------------------------
 " Python PEP 8
@@ -23,11 +44,11 @@ au BufNewFile,BufRead *.py
     \ set fileformat=unix 
 
 " Flagging unecessary white-spaces
-au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
-highlight BadWhitespace ctermbg=red
+" au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
+" highlight BadWhitespace ctermbg=red
 
 " ----------------------------------------------------------
-" MAP LEADER
+" MAP LEADER & KEYBOARD MAPPING
 " ----------------------------------------------------------
 "let mapleader = ","
 let mapleader = "\<Space>"
@@ -38,14 +59,42 @@ nnoremap ; :
 " Bind 'jj' to <esc> to jump out of insert mode
 inoremap jj <ESC>
 
-" Font, encoding and colorscheme
-set background=dark
-"colorscheme solarized
-set encoding=utf-8
-"set guifont=Anonymous\ Pro:h11
 
 nmap <F3> i<C-R>=strftime("%d-%m-%Y %a %H:%M")<CR><Esc>
 imap <F3> <C-R>=strftime("%d-%m-%Y %a %H:%M")<CR>
+
+" QWERTY and Czech-chars
+
+" delay with double-tap setup
+set timeoutlen=240
+
+noremap 11 °
+inoremap 11 °
+noremap 22 ě
+inoremap 22 ě
+noremap 33 š
+inoremap 33 š
+noremap 44 č
+inoremap 44 č
+noremap 55 ř
+inoremap 55 ř
+noremap 66 ž
+inoremap 66 ž
+noremap 77 ý
+inoremap 77 ý
+noremap 88 á
+inoremap 88 á
+noremap 99 í
+inoremap 99 í
+noremap 00 é
+inoremap 00 é
+noremap ?? ~
+inoremap ?? ~
+noremap ;; ů
+inoremap ;; ů
+noremap ;;; ú
+inoremap ;;; ú
+
 
 " ----------------------------------------------------------
 " Commenting blocks of code.
@@ -99,3 +148,19 @@ map <C-j> <C-w>j
 map <C-k> <C-w>k
 map <C-l> <C-w>l
 endif
+
+"--------------------------------------------------------
+" netrw: Network oriented reading, writing, and browsing.
+"--------------------------------------------------------
+" Disable the top banner.
+let g:netrw_banner=0
+" Tree-like view.
+let g:netrw_liststyle=3
+" Open splits to the right.
+let g:netrw_altv=1
+" Use a smaller window.
+let g:netrw_winsize=25
+" Do not perform any magic during sorting (like putting .h files together),
+" except for listing directories first.
+let g:netrw_sort_sequence='[\/]$'
+

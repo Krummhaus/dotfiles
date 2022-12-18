@@ -80,6 +80,7 @@
     :config
     ;; Make sure org file code highlights correctly
     (setq org-src-fontify-natively t)
+    (setq org-confirm-babel-evaluate nil)
     (setq org-todo-keywords '(
 ;;(sequence "TODO" "In Progress" "|" "Waiting" "DONE" "Completed")
 			      (sequence "Queue" "Working On" "On Hold" "|" "Finished" "Worked On" "Removed")))

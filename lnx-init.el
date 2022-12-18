@@ -1,4 +1,8 @@
+;; Dont make backup files
 (setq make-backup-files nil)
+
+;; Display line number when programming
+(add-hook 'prog-mode-hook 'display-line-numbers-mode)
 
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
@@ -67,7 +71,7 @@
 
 (use-package yasnippet
     :config
-    (setq yas-snippet-dirs '("~/yasnippets"))
+    (setq yas-snippet-dirs '("~/org-roam/yasn"))
     (yas-global-mode 1))
 
 ;; Org-Mode
@@ -113,3 +117,27 @@
 	 (cpp . nil)
 	   ;; other languages..
 ))
+
+;; Ivy
+(use-package ivy
+  :ensure t
+  :config
+  (ivy-mode 1)
+  (setq ivy-use-virtual-buffers t)
+  (setq enable-recursive-minibuffers t)
+  ;; Ivy Keybindings
+  (global-set-key (kbd "C-c C-r") 'ivy-resume))
+
+;; Swiper
+(use-package swiper
+  :ensure t
+  :config
+  (global-set-key "\C-s" 'swiper)
+  )
+
+;; Counsel
+(use-package counsel 
+  :ensure t
+  :config 
+  (global-set-key (kbd "M-x") 'counsel-M-x)
+  (global-set-key (kbd "C-x C-f") 'counsel-find-file))

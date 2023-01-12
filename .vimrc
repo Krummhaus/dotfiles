@@ -71,7 +71,9 @@ set timeoutlen=240
 inoremap ss *
 inoremap hh #
 inoremap aa '
-inoremap bb `
+inoremap kk `
+inoremap kkk ```<CR>```<Esc>ko 
+inoremap kkp ```python<CR>```<Esc>ko 
 
 
 " ----------------------------------------------------------

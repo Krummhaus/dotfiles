@@ -1,6 +1,4 @@
 # MISCELLANOUS
-alias mous='bash <(curl -s http://www.nicknorton.net/mousewheel.sh)'
-alias off='shutdown -P now'
 alias smi='watch -n 0.5 nvidia-smi'
 alias cl='clear'
 
@@ -30,5 +28,4 @@ alias dri='docker rmi -f'
 alias drm='docker rm'
 
 # Changing directories
-alias wspj='cd /mnt/c/Users/asus/Documents/projekty/vspj'
-alias vspj='cd ~/projekty/vspj'
+alias vspj='cd /mnt/c/Users/asus/Documents/projekty/vspj'

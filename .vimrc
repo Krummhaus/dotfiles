@@ -68,32 +68,10 @@ imap <F3> <C-R>=strftime("%d-%m-%Y %a %H:%M")<CR>
 " delay with double-tap setup
 set timeoutlen=240
 
-noremap 11 °
-inoremap 11 °
-noremap 22 ě
-inoremap 22 ě
-noremap 33 š
-inoremap 33 š
-noremap 44 č
-inoremap 44 č
-noremap 55 ř
-inoremap 55 ř
-noremap 66 ž
-inoremap 66 ž
-noremap 77 ý
-inoremap 77 ý
-noremap 88 á
-inoremap 88 á
-noremap 99 í
-inoremap 99 í
-noremap 00 é
-inoremap 00 é
-noremap ?? ~
-inoremap ?? ~
-noremap ;; ů
-inoremap ;; ů
-noremap ;;; ú
-inoremap ;;; ú
+inoremap ss *
+inoremap hh #
+inoremap aa '
+inoremap bb `
 
 
 " ----------------------------------------------------------

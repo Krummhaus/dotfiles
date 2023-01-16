@@ -7,6 +7,7 @@ syntax enable
 
 " Using vim with psql
 au BufRead /tmp/psql.edit* set syntax=sql
+set syntax=dbout
 
 " Font, encoding and colorscheme
 set t_Co=256

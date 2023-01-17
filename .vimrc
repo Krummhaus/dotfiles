@@ -75,7 +75,8 @@ inoremap ss *
 inoremap hh #
 inoremap aa '
 inoremap kk `
-inoremap kkk ```<CR>```<Esc>ko 
+inoremap kkk ```
+inoremap kkg ```<CR>```<Esc>ko 
 inoremap kkp ```python<CR>```<Esc>ko 
 
 

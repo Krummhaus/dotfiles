@@ -124,3 +124,5 @@ fi
 # export LD_LIBRARY_PATH=$ORACLE_HOME:$LD_LIBRARY_PATH
 # export PATH=$ORACLE_HOME:$PATH
 export EDITOR=vim
+
+# Custom function `dat`

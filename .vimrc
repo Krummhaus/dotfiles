@@ -71,7 +71,7 @@ imap <F3> <C-R>=strftime("%d-%m-%Y %a %H:%M")<CR>
 " delay with double-tap setup
 set timeoutlen=240
 
-inoremap ss *
+inoremap ff *
 inoremap hh #
 inoremap aa '
 inoremap kk `

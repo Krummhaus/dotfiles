@@ -126,3 +126,10 @@ fi
 export EDITOR=vim
 
 # Custom function `dat`
+duit(){ w3m https://lite.duckduckgo.com/html/?q="$*"; }
+
+keg() { newdir=~/keg/$(date +%Y-%m-%d-%H%M%S) 
+	mkdir $newdir
+	touch $newdir/README.md
+	vim $newdir/README.md
+}

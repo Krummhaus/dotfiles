@@ -17,6 +17,10 @@ set background=dark
 set encoding=utf-8
 "set guifont=Anonymous\ Pro:h11
 
+" Tabulators
+set softtabstop=4
+set shiftwidth=4
+set expandtab
 
 set noswapfile
 "set relativenumber
@@ -57,7 +61,6 @@ au BufNewFile,BufRead *.py
 let mapleader = "\<Space>"
 noremap <leader>w :w<cr>
 
-nnoremap ; :
 
 " Bind 'jj' to <esc> to jump out of insert mode
 inoremap jj <ESC>

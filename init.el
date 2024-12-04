@@ -93,7 +93,11 @@
    '(markdown-header-face-3 ((t (:inherit markdown-header-face :height 1.1))))))
 
 ;;; Magit
+;(use-package magit
+  ;:ensure t)
+;; Because Magit on Windows is pain so install only on Linux
 (use-package magit
+  :if (not (eq system-type 'windows-nt))
   :ensure t)
 
 ;;; Ido Mode
@@ -111,7 +115,9 @@
 
 ;; Clang Format
 ;; Load clang-format
-(require 'clang-format)
+;(require 'clang-format)
+(if (not (eq system-type 'windows-nt))
+    (require 'clang-format))
 
 ;; Function to run clang-format on save
 (defun clang-format-on-save ()

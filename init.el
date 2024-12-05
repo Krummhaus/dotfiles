@@ -16,6 +16,7 @@
 (setq scroll-bar-mode -1)
 ;; Dont make backup files
 (setq make-backup-files nil)
+(setq auto-save-default nil)
 ;;For Emacs versions prior to 28, you must use fset: (fset 'yes-or-no-p 'y-or-n-p)
 (setq use-short-answers t)
 ;; confirmation if a file or buffer does not exist when you use C-x C-f or C-x b.

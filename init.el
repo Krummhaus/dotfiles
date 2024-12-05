@@ -86,11 +86,27 @@
 (evil-set-initial-state 'magit-mode 'emacs)
 
 ;;; Custom key bindings
-;; cycle between windows using Ctrl + Tab
 (global-set-key (kbd "<C-tab>") 'other-window)
 (global-set-key (kbd "C-,") 'dupl-line)
 (global-set-key (kbd "C-5") 'compile)
 (global-set-key (kbd "C-0") 'shell-command)
+
+;; for clang-format
+(defun insert-clang-format-off ()
+  "Inserts '// clang-format off' at the point."
+  (interactive)
+  (insert "// clang-format off"))
+
+(defun insert-clang-format-on ()
+  "Inserts '// clang-format on' at the point."
+  (interactive)
+  (insert "// clang-format on"))
+(global-set-key (kbd "C-c f") 'insert-clang-format-off)
+(global-set-key (kbd "C-c o") 'insert-clang-format-on)
+
+;; "M-x" remap to "Shift + Space"
+(global-set-key (kbd "S-SPC") 'execute-extended-command)
+
 
 ;;; Unicode Everywhere
 (setq utf-translate-cjk-mode nil) ; disable CJK coding/encoding (Chinese/Japanese/Korean characters)

@@ -52,6 +52,45 @@
 ;;; Theme
 (load-theme 'deeper-blue t)
 
+;;; Evil Mode
+(use-package evil
+  :ensure t
+  :init
+  (setq evil-want-keybinding nil)
+  :config
+  (evil-mode 1))
+
+;; Evil imap jj <Esc>
+(defun xwl-jj-as-esc ()
+  (interactive)
+  (if (memq evil-state '(insert replace))
+      (let ((changed? (buffer-modified-p)))
+          (insert "j")
+          (let* ((tm (current-time))
+                 (ch (read-key)))
+            (if (and (eq ch ?j)
+                     (< (time-to-seconds (time-since tm)) 0.2))
+                (save-excursion
+                  (delete-char -1)
+                  (evil-force-normal-state)
+                  (set-buffer-modified-p changed?))
+              (insert ch))))
+    (call-interactively 'evil-next-line)))
+
+(define-key evil-insert-state-map  "j" 'xwl-jj-as-esc)
+(define-key evil-replace-state-map "j" 'xwl-jj-as-esc)
+
+;; Turn of Evil in dired mode
+(evil-set-initial-state 'dired-mode 'emacs)
+(evil-set-initial-state 'magit-mode 'emacs)
+
+;;; Custom key bindings
+;; cycle between windows using Ctrl + Tab
+(global-set-key (kbd "<C-tab>") 'other-window)
+(global-set-key (kbd "C-,") 'dupl-line)
+(global-set-key (kbd "C-5") 'compile)
+(global-set-key (kbd "C-0") 'shell-command)
+
 ;;; Unicode Everywhere
 (setq utf-translate-cjk-mode nil) ; disable CJK coding/encoding (Chinese/Japanese/Korean characters)
 (set-language-environment 'utf-8)
@@ -67,7 +106,7 @@
 
 
 ;;; Font
-(add-to-list 'default-frame-alist '(font . "Iosevka-12" ))
+;(add-to-list 'default-frame-alist '(font . "Iosevka-12" ))
 ;(add-to-list 'default-frame-alist '(font . "Cascadia Mono 12" ))
 ;(set-face-attribute 'default t :font "Cascadia Mono" )
 ;(add-to-list 'default-frame-alist '(font . "Liberation Mono 10" ))
@@ -112,8 +151,7 @@
     (newline)
     (insert text)))
 
-
-;; Clang Format
+;;; Clang Format
 ;; Load clang-format
 ;(require 'clang-format)
 (if (not (eq system-type 'windows-nt))
@@ -127,46 +165,7 @@
 
 ;; Add the hook to the before-save-hook
 (add-hook 'before-save-hook 'clang-format-on-save)
-;;; Evil Mode
-(use-package evil
-  :ensure t
-  :init
-  (setq evil-want-keybinding nil)
-  :config
-  (evil-mode 1))
 
-
-;; Evil imap jj <Esc>
-(defun xwl-jj-as-esc ()
-  (interactive)
-  (if (memq evil-state '(insert replace))
-      (let ((changed? (buffer-modified-p)))
-          (insert "j")
-          (let* ((tm (current-time))
-                 (ch (read-key)))
-            (if (and (eq ch ?j)
-                     (< (time-to-seconds (time-since tm)) 0.2))
-                (save-excursion
-                  (delete-char -1)
-                  (evil-force-normal-state)
-                  (set-buffer-modified-p changed?))
-              (insert ch))))
-    (call-interactively 'evil-next-line)))
-
-(define-key evil-insert-state-map  "j" 'xwl-jj-as-esc)
-(define-key evil-replace-state-map "j" 'xwl-jj-as-esc)
-
-
-
-;; turn of Evil in dired mode
-(evil-set-initial-state 'dired-mode 'emacs)
-(evil-set-initial-state 'magit-mode 'emacs)
-
-;;; Custom key bindings
-;; cycle between windows using Ctrl + Tab
-(global-set-key (kbd "<C-tab>") 'other-window)
-;; Bind <C-,> to duplicate-line globally
-(global-set-key (kbd "C-,") 'dupl-line)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.

@@ -20,7 +20,7 @@ set encoding=utf-8
 " Tabulators
 set softtabstop=4
 set shiftwidth=4
-set expandtab
+"set expandtab
 
 set noswapfile
 "set relativenumber
@@ -55,6 +55,22 @@ au BufNewFile,BufRead *.py
 " highlight BadWhitespace ctermbg=red
 
 " ----------------------------------------------------------
+" C
+" ----------------------------------------------------------
+au BufNewFile,BufRead *.c,*.h
+    \ set tabstop=2 |
+    \ set softtabstop=2 |
+    \ set shiftwidth=4 |
+    \ set textwidth=79 |
+    \ set expandtab |
+    \ set autoindent |
+    \ set fileformat=unix 
+
+" Flagging unecessary white-spaces
+" au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
+" highlight BadWhitespace ctermbg=red
+
+" ----------------------------------------------------------
 " MAP LEADER & KEYBOARD MAPPING
 " ----------------------------------------------------------
 "let mapleader = ","
@@ -73,15 +89,6 @@ imap <F3> <C-R>=strftime("%d-%m-%Y %a %H:%M")<CR>
 
 " delay with double-tap setup
 set timeoutlen=240
-
-inoremap ff *
-inoremap hh #
-inoremap aa '
-inoremap kk `
-inoremap kkk ```
-inoremap kkg ```<CR>```<Esc>ko 
-inoremap kkp ```python<CR>```<Esc>ko 
-
 
 " ----------------------------------------------------------
 " Commenting blocks of code.

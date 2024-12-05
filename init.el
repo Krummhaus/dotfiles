@@ -107,6 +107,7 @@
 
 
 ;;; Font
+(set-face-attribute 'default nil :height 115)
 ;(add-to-list 'default-frame-alist '(font . "Iosevka-12" ))
 ;(add-to-list 'default-frame-alist '(font . "Cascadia Mono 12" ))
 ;(set-face-attribute 'default t :font "Cascadia Mono" )

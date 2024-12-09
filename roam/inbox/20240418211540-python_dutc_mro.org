@@ -1,0 +1,43 @@
+:PROPERTIES:
+:ID:       dec4a422-77f8-4925-a327-f4fad41a6957
+:END:
+#+title: python-dutc-mro
+* MTO Method Resolution Order
+- source: https://www.youtube.com/watch?v=Lz0hQj58thU
+
+** Classic Diamond hierarchy
+- *super().foo()
+#+begin_src python :results output
+class A:
+    def foo(self):
+        return 'A.foo'
+
+class B(A):
+    def foo(self):
+        return 'B.foo', super().foo()
+
+class C(A):
+    def foo(self):
+        return 'C.foo', super().foo()
+
+class D(B, C):
+    def foo(self):
+        return 'D.foo', super().foo()
+
+w = A()
+x = B()
+y = C()
+z = D()
+
+print(w.foo())
+print(x.foo())
+print(y.foo())
+print(z.foo())
+
+#+end_src  
+
+#+RESULTS:
+: A.foo
+: ('B.foo', 'A.foo')
+: ('C.foo', 'A.foo')
+: ('D.foo', ('B.foo', ('C.foo', 'A.foo')))

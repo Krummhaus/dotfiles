@@ -1,0 +1,30 @@
+:PROPERTIES:
+:ID:       5a88b9d5-8912-46c8-a9c6-bea91053dd2a
+:END:
+#+title: python-args-kwargs
+
+* Python *args & **kwargs ..also "*" as unpacking operator
+
+#+begin_src python :results output
+nums = [2, 5, 6, 1, 9]
+print(nums)
+print(*nums)
+
+def order_pizza(size, *toppings, **details):
+    print(f"Ordered a {size} pizza.")
+    print(toppings)
+    print(*toppings)
+    print(details)
+    print(*details)
+
+order_pizza("big", "olives", "ananas", delivery=True, tip=5)
+
+#+end_src
+
+#+RESULTS:
+: [2, 5, 6, 1, 9]
+: 2 5 6 1 9
+: Ordered a big pizza.
+: ('olives', 'ananas')
+: olives ananas
+: {'delivery': True, 'tip': 5}

@@ -1,0 +1,57 @@
+:PROPERTIES:
+:ID:       7879823c-1c59-4b2e-99ea-62fc7c68a7ce
+:END:
+#+title: python-object-call
+
+* Python function is an object of type callable
+
+** Canonical example
+#+begin_src python :results output
+class Adder:
+  """
+  A class that implements a function as a class with the __call__ method.
+  """
+  def __init__(self, x):
+    self.x = x
+
+  def __call__(self, y):
+    """
+    The __call__ method allows the class to be called like a function.
+    """
+    return self.x + y
+
+# Create an instance of the Adder class
+adder = Adder(5)
+
+# Call the instance like a function
+result = adder(3)
+
+# Print the result
+print(result)
+#+end_src
+
+#+RESULTS:
+: 8
+
+** Advanced example in Pytorch transform
+#+begin_src python :results output
+  import torch
+  from torch.utils.data import DataLoader, random_split
+  from torchvision import datasets, transforms
+  from PIL import Image
+
+  class ConvertToRGB(object):
+      def __call__(self, img):
+	  # Convert RGBA image to RGB
+	  if img.mode == 'RGBA':
+	      img = img.convert('RGB')
+	  return img
+
+
+  data_transform =  transforms.Compose([
+      transforms.Resize((224, 224)),
+      ConvertToRGB(),
+      transforms.ToTensor(),
+      transforms.Normalize([0.485, 0.456, 0.406],[0.229, 0.224, 0.225])
+  ])
+#+end_src

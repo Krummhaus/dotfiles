@@ -1,0 +1,22 @@
+:PROPERTIES:
+:ID:       8d57f25e-31a2-4346-bff8-289899bd7f76
+:END:
+#+title: Python-Code-Block
+
+* To see some resource:
+- Good tip is to open code-block in minibufer press <C-c '>
+  nice for indentation (https://www.youtube.com/watch?v=dljNabciEGg)
+
+#+begin_src python :results output
+  print("Hello Org-Py-Babel")
+  for i in range(5):
+      print(i)
+#+end_src
+
+#+RESULTS:
+: Hello Org-Py-Babel
+: 0
+: 1
+: 2
+: 3
+: 4

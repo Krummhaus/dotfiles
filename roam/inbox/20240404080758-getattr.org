@@ -1,0 +1,42 @@
+:PROPERTIES:
+:ID:       082a97b3-129a-4164-949d-d516000007ab
+:END:
+#+title: __getattr__
+
+Below in the BABEL code i have problem with pyton indentation
+so there could be link to solution:
+https://stackoverflow.com/questions/20894683/control-indentation-with-org-babel
+
+#+begin_src python :results output
+  class Base:
+      def __len__(self):
+	  return 1
+
+  class Derived:
+      def __len__(self):
+	  return "Infinite"
+	  #return super().__len__() + 1
+
+  if __name__ == '__main__':
+      b = Base()
+      d = Derived()
+      b.cont = [1, 2, 3]
+      d.cont = [1, 2, 3, 4, 5, 6]
+      print(len(b.cont))
+      print(len(d.cont))
+
+#+end_src
+
+#+RESULTS:
+
+
+#+begin_src python :results output
+  def divide(x, y):
+      assert y != 0, "Cannot divide by zero!"
+      return x / y
+
+  result = divide(10, 0)
+  print(result)
+#+end_src
+
+#+RESULTS:

@@ -1,0 +1,33 @@
+:PROPERTIES:
+:ID:       faeb647a-5640-4808-8386-359cd4b8fec6
+:END:
+#+title: python-partial
+* COMMENT How to implement python partial function
+
+#+begin_src python :results output
+  from functools import partial
+
+  def num_to_power(num, power):
+      return num ** power
+
+  print("num_to_power(2, 4)")
+  print(num_to_power(2, 4))
+
+  square_it = partial(num_to_power, power=8)
+  print("square_it(2)")
+  print(square_it(2))
+
+  square_yolo = partial(num_to_power, 2, 16)
+  print("square_yolo()")
+  print(square_yolo())
+#+end_src
+
+#+RESULTS:
+: num_to_power(2, 4)
+: 16
+: square_it(2)
+: 256
+: square_yolo()
+: 65536
+
+

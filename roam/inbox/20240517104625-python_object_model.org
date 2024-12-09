@@ -1,0 +1,56 @@
+:PROPERTIES:
+:ID:       23259274-560e-42a9-87eb-e633a9dd515b
+:END:
+#+title: python-object-model
+
+* A Deep Dive Into Python's Object/Data Model | Petr Zemek
+
+Sources:
+
+- The ytb video:
+  https://www.youtube.com/watch?v=3z3lVhxTkCs
+- Blog: Understanding Python metaclasses:
+  https://blog.ionelmc.ro/2015/02/09/understanding-python-metaclasses/
+- GitHub code for video:
+  https://github.com/s3rvac/talks/tree/master/2024-05-14-A-Deep-Dive-Into-Python-Object-Model/examples
+
+** The basics 'class Circle'
+#+begin_src python :results output
+# The basics.
+import math
+
+class GeometricObject:
+    pass
+
+class Circle(GeometricObject):
+    """A representation of a circle."""
+
+    def __init__(self, radius):
+        self.radius = radius
+
+    def area(self):
+        return math.pi * self.radius ** 2
+
+    @property # 
+    def diameter(self):
+        return 2 * self.radius
+
+    @classmethod
+    def unit_circle(cls):
+        return cls(1)
+
+c1 = Circle(10)
+print(c1.radius) # 10
+print(c1.area()) # 314.1592653589793
+print(c1.diameter) # 20
+
+c2 = Circle.unit_circle()
+print(c2.radius) # 1
+#+end_src
+
+#+RESULTS:
+: 10
+: 314.1592653589793
+: 20
+: 1
+

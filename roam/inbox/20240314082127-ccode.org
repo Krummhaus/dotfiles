@@ -1,0 +1,12 @@
+:PROPERTIES:
+:ID:       08c7b1e7-29e1-4d33-a6c1-a9b833a269e8
+:END:
+#+title: Ccode
+
+let see Babel on Windows with C code
+
+#+begin_src C++ :includes <stdio.h>
+  int a=1;
+  int b=1;
+  printf("%d\n", a+b);
+#+end_src

@@ -1,0 +1,52 @@
+:PROPERTIES:
+:ID:       e9a4d482-8aa3-4e3c-a55f-309f6bff5796
+:END:
+#+title: python-property
+
+* @property
+C++ nabádá k tomu neodhalovat atributy tøídy.
+Místo toho vybízí k pou¾ití *getter & setter*.
+              - a.k.a. *accessors & mutators*.
+
+Properties jsou *class-attributes*, které se starají o *instance-attributes*
+
+#+begin_src python :results output
+class Circle:
+    def __init__(self, radius):
+        self._radius = radius # "_" for private attribute
+
+    # a.k.a Getter
+    @property
+    def radius(self):
+        print("@property")
+        return self._radius
+
+    @radius.setter
+    def radius(self, value):
+        print("@property")
+        if value >= 0:
+            self._radius = value
+        else:
+            raise ValueError("Radius must be > 0")
+    @property
+    def diameter(self):
+        return self._radius * 2
+
+
+c = Circle(5)
+print(c.radius)
+print(c.diameter)
+c.radius = 11
+print(c.radius)
+print(c.diameter)
+
+#+end_src
+
+#+RESULTS:
+: @property
+: 5
+: 10
+: @property
+: @property
+: 11
+: 22

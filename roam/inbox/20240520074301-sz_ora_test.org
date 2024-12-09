@@ -1,0 +1,23 @@
+:PROPERTIES:
+:ID:       77be443f-9fac-4d1f-8365-d847140fc064
+:END:
+#+title: sz-ora-test
+
+#+name: my-query
+#+header: :engine oracle
+#+header: :dbhost 10.2.4.32
+#+header: :dbuser MROSZ
+#+header: :dbpassword izm
+#+header: :database IZM
+#+begin_src sql :results output
+  SELECT * FROM m_stage_log
+  WHERE where bal_id = 19002101001
+#+end_src
+
+#+RESULTS: my-query
+
+#+begin_src python :results output
+print(my_query)
+#+end_src
+
+#+RESULTS:

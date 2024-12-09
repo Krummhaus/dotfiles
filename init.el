@@ -185,6 +185,61 @@
 (add-hook 'before-save-hook 'clang-format-on-save)
 
 
+;;; Org-Mode
+(use-package org
+    :ensure t
+    :config
+    ;; For code-blocks insentation
+    ;; Make sure org file code highlights correctly
+    (setq org-src-fontify-natively t)
+    ;;(setq org-src-tab-acts-natively t) ; TAB-ing in code-blocks
+    (setq org-src-fontify-natively t
+        org-src-window-setup 'current-window ;; edit in current window
+        org-src-strip-leading-and-trailing-blank-lines t
+        org-src-preserve-indentation t ;; do not put two spaces on the left
+        org-src-tab-acts-natively t)
+    (setq org-confirm-babel-evaluate nil) ; Dont ask to evaluate code
+    (setq org-todo-keywords '(
+    (sequence "TODO" "In Progress" "|" "Waiting" "DONE" "Completed")
+    (sequence "Queue" "Working On" "On Hold" "|" "Finished" "Worked On" "Removed")))
+    )
+
+;;; Org-Babel
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((C . t)        ; Enable C
+   (cpp . nil)    ; Disable C++
+   (python . t)   ; Enable Python
+   (sql . t)      ; Enable SQL
+   ;; Add other languages as needed
+   ))
+
+
+;;; Org-Roam
+(use-package org-roam
+  :ensure t
+  :custom
+  (org-roam-diretory
+   (if (eq system-type 'windows-nt)
+       "c:\\dotfiles\\roam\\inbox"
+       "/home/krumm/dotfiles/roam/inbox"))
+  :bind (("C-c n l" . org-roam-buffer-toggle)
+         ("C-c n f" . org-roam-node-find)
+         ("C-c n i" . org-roam-node-insert)
+         ("C-c n j" . org-roam-dailies-capture-today))
+  :config
+  (org-roam-setup)
+  (org-roam-db-autosync-mode))
+
+;; Insertin NODE immediatly withou confirm minibuffer
+(defun org-roam-node-insert-immediate (arg &rest args)
+  (interactive "P")
+  (let ((args (cons arg args))
+	(org-roam-capture-templates (list (append (car org-roam-capture-templates)
+						  '(:immediate-finish t)))))
+    (apply #'org-roam-node-insert args)))
+
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

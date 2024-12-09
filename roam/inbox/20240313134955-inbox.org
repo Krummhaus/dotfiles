@@ -1,0 +1,23 @@
+:PROPERTIES:
+:ID:       99b99137-2d1c-4ccb-a5b9-e40f8eb74b4f
+:END:
+#+title: inbox
+This is inbox first test
+
+#+begin_src python :results output
+print("Run inside code-block 'C-c C-c'")
+#+end_src
+
+#+RESULTS:
+: Run inside code-bloc 'C-c C-c'
+
+
+#+begin_src C :results output
+#include <stdio.h>
+int main(void) {
+printf("Babel");
+return 0;
+}
+#+end_src
+
+#+RESULTS:

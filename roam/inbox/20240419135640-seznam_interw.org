@@ -1,0 +1,10 @@
+:PROPERTIES:
+:ID:       f0f168cd-e130-4c24-8886-db60f22eab76
+:END:
+#+title: seznam-interw
+
+#+begin_src python :results output
+class Circle():
+
+
+#+end_src

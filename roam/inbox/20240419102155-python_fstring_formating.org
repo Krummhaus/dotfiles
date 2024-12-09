@@ -1,0 +1,54 @@
+:PROPERTIES:
+:ID:       4ced69b7-590b-46a8-9c58-eadb7c5114ee
+:END:
+#+title: python-fstring-formating
+
+* Few tricks to format output using f-strings
+
+#+begin_src python :results output
+from datetime import datetime
+
+# separators for large numbers _ ,
+n = 10000000000
+print(f"{n:_}")
+print(f"{n:,}")
+
+# right | left | center align text
+var = "var"
+print(f"{var:_>9}:")
+print(f"{var:|<9}:")
+print(f"{var:#^9}:")
+
+# time
+now = datetime.now()
+print(f"{now:%d.%m.%y}")
+print(f"{now:%d.%m.%y (%H:%M:%S})")
+print(f"{now:%c}")
+
+#floats
+f = 7023.0945673
+print(f"{f:.3f}")
+print(f"{f:.3f}")
+print(f"{f:,.3f}")
+
+# debugging using f-strings
+a = 4
+b = 4
+print(f"{a + b = }")
+#+end_src
+
+#+RESULTS:
+#+begin_example
+10_000_000_000
+10,000,000,000
+______var:
+var||||||:
+###var###:
+19.04.24
+19.04.24 (10:39:44)
+Fri Apr 19 10:39:44 2024
+7023.095
+7023.095
+7,023.095
+a + b = 8
+#+end_example

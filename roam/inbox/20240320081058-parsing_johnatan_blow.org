@@ -1,0 +1,9 @@
+:PROPERTIES:
+:ID:       b09c880f-cbc2-4b9c-bfe6-bea0e3d3dcfd
+:END:
+#+title: Parsing-Johnatan-Blow
+
+* Compiler and parsing, .. a jak je to s prioritou operatoru.
+nabizi se zde jednoduche reseni
+
+Source: https://www.youtube.com/watch?v=fIPO4G42wYE

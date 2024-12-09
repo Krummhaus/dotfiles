@@ -1,0 +1,17 @@
+:PROPERTIES:
+:ID:       4dbb4aa5-d7d0-4cb8-9ed2-e7b79da8ebe3
+:END:
+#+title: py-try
+
+#+begin_src python :results output
+  cont = [0, 3, 4, 6, 9]
+  for num, idx in enumerate(cont):
+      print(f"{num=}, {idx=}")
+#+end_src
+
+#+RESULTS:
+: num=0, idx=0
+: num=1, idx=3
+: num=2, idx=4
+: num=3, idx=6
+: num=4, idx=9

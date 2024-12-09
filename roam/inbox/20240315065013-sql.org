@@ -1,0 +1,35 @@
+:PROPERTIES:
+:ID:       7d3b4cac-cb07-4de1-958b-17a2541192b7
+:END:
+#+title: Oracle db mangement via Babel
+
+- https://orgmode.org/worg//org-contrib/babel/languages/ob-doc-sql.html
+  
+  
+#+name: my-query
+#+header: :engine oracle
+#+header: :dbhost 10.2.4.32 
+#+header: :port 1521
+#+header: :dbuser IMPORT2
+#+header: :dbpassword izm
+#+header: :database IZM
+#+begin_src sql
+select * from m_bal
+#+end_src
+
+#+RESULTS: my-query
+| ERROR:                                                                   |   |                    |         |        |           |       |       |                           |
+| ORA-01017: invalid username/password; logon denied                       |   |                    |         |        |           |       |       |                           |
+|--------------------------------------------------------------------------+---+--------------------+---------+--------+-----------+-------+-------+---------------------------|
+|--------------------------------------------------------------------------+---+--------------------+---------+--------+-----------+-------+-------+---------------------------|
+| SP2-0306: Invalid option.                                                |   |                    |         |        |           |       |       |                           |
+| Usage: CONN[ECT] [{logon                                                 | / | proxy} [AS {SYSDBA | SYSOPER | SYSASM | SYSBACKUP | SYSDG | SYSKM | SYSRAC}] [edition=value]] |
+| where <logon> ::= <username>[/<password>][@<connect_identifier>]         |   |                    |         |        |           |       |       |                           |
+| <proxy> ::= <proxyuser>[<username>][/<password>][@<connect_identifier>]  |   |                    |         |        |           |       |       |                           |
+| SP2-0306: Invalid option.                                                |   |                    |         |        |           |       |       |                           |
+| Usage: CONN[ECT] [{logon                                                 | / | proxy} [AS {SYSDBA | SYSOPER | SYSASM | SYSBACKUP | SYSDG | SYSKM | SYSRAC}] [edition=value]] |
+| where <logon> ::= <username>[/<password>][@<connect_identifier>]         |   |                    |         |        |           |       |       |                           |
+| <proxy> ::= <proxyuser>[<username>][/<password>][@<connect_identifier>]  |   |                    |         |        |           |       |       |                           |
+| SP2-0157: unable to CONNECT to ORACLE after 3 attempts, exiting SQL*Plus |   |                    |         |        |           |       |       |                           |
+
+

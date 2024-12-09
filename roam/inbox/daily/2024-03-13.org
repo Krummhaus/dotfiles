@@ -1,0 +1,16 @@
+:PROPERTIES:
+:ID:       c3b9e25e-66b6-4e37-a927-cd4f2cf2aec4
+:END:
+#+title: 2024-03-13
+* journal of today 13.3.2023
+
+#+begin_src python :results output
+  for i in range(4):
+      print(i)
+#+end_src
+
+#+RESULTS:
+: 0
+: 1
+: 2
+: 3

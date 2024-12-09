@@ -1,0 +1,28 @@
+:PROPERTIES:
+:ID:       12cec861-3238-4090-b505-0b3f3b6fdc41
+:END:
+#+title: elisp-basics
+
+* Basic syntax
+- Function call
+#+begin_src elisp
+(defun add-func (num)
+  ( + num 1))
+
+(add-func 1)
+#+end_src
+
+#+RESULTS:
+: 2
+
+#+begin_src elisp
+(defun add-one (num)
+  (+ num 1))
+
+(funcall 'add-one 3)
+
+#+end_src
+
+#+RESULTS:
+: 4
+

@@ -1,0 +1,28 @@
+:PROPERTIES:
+:ID:       68ea9a25-4526-4f78-9f22-191ab74f9f31
+:END:
+#+title: python-decorator
+
+* Function that takes another function "Clojure"
+#+begin_src python :results output
+import time
+
+def take_a_nap(func):
+    def wrapper():
+        t1 = time.time()
+        func()
+        t2 = time.time() - t1
+        print(f'"{func.__name__}" took {t2:.2f} seconds nap..')
+    return wrapper
+
+@take_a_nap
+def do_this():
+    print("Doing this!")
+    time.sleep(1.7)
+
+do_this()
+#+end_src
+
+#+RESULTS:
+: Doing this!
+: "do_this" took 1.71 seconds nap..

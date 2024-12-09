@@ -1,0 +1,54 @@
+:PROPERTIES:
+:ID:       465c136e-c6d4-4964-810c-bd29736df913
+:END:
+#+title: REST-vs-GraphQL
+
+
+* GraphQL
+- Sits between Client and Backend services
+- Multiple resource requests into a single query.
+  
+** Compare
+Both uses:
+- http
+- make Request via URL
+- returns JSON response in same shape
+  
+*** REST Client --> GET /books/123 --> REST Server
+https:://example.com/api/v3/products
+https:://example.com/api/v3/users
+.. where `/products` & `/users` are RESOURCES
+#+begin_src js
+{
+  "title": "C Language",
+  "authors": [{
+      "name": "Brian Kernighan"
+  },
+  {
+      "name": "Dennis M. Ritchie"
+  }]
+  ...
+}
+#+end_src
+
+*** GrapQL Client
+*Mutations* = apply data modifications
+*Subscriptions* = Client way to recieve notifications
+
+- GET /graphql?querry={ book(id: "123") { title, authors { name } } }
+  .. where `book` are RESOURCES, `title` & `authors` are FIELDS
+#+begin_src js
+  type Book {
+    id: ID
+    title: String
+    authors: [Author]
+  }
+
+  type Author {
+    id: ID
+    title: String
+    authors: [Author]
+  }
+#+end_src
+* Sources:
+- (video)https://www.youtube.com/watch?v=yWzKJPw_VzM 

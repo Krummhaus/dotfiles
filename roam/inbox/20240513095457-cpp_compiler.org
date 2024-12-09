@@ -1,0 +1,20 @@
+:PROPERTIES:
+:ID:       e4ce0aba-aa5a-4fa6-ad75-a52f4693e828
+:END:
+#+title: cpp-compiler
+
+#+begin_src C++ :results raw 
+#include
+
+#+end_src
+
+#+begin_src C++ :results output 
+#include <iostream>
+usinng namespace std;
+int main() {
+cout << "hello" << endl;
+}
+
+#+end_src
+
+#+RESULTS:

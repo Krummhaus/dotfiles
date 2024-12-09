@@ -1,0 +1,307 @@
+:PROPERTIES:
+:ID:       45d85eeb-4114-4425-be6d-d217ce536e12
+:END:
+#+title: mrosz-api-test
+
+* Testování rùzných endpointù MROSZ
+
+#+begin_src python :results output
+x = 201
+if 200 < x < 300:
+    print(x)
+else:
+    print("no")
+#+end_src
+
+#+RESULTS:
+: 201
+
+*** Definice M_ETAPA
+
+#+begin_src sql
+CREATE TABLE M_ETAPA (
+TU_CIS CHAR(4),
+ET_CIS CHAR(3),
+PRIMARY KEY (TU_CIS, ET_CIS),
+POCET_BAL NUMBER(5) DEFAULT 0,
+METADATA_UPLOAD NUMBER(1) DEFAULT 0,
+XLS NUMBER(1) DEFAULT 0,
+XLS_FLAG NUMBER(2),
+TXT NUMBER(1) DEFAULT 0,
+POZN VARCHAR2(500),
+ZALOZENO TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+ALTER TABLE M_ETAPA ADD CONSTRAINT fk_etapa_mtu
+    FOREIGN KEY (tu_cis) REFERENCES m_tu(tu_cis);
+ALTER TABLE M_ETAPA ADD CONSTRAINT fk_etapa_csetapa
+    FOREIGN KEY (et_cis) REFERENCES m_cs_etapa(et_cis);
+#+end_src
+
+
+*** FME scirpted parameters mock
+#+begin_src python :results output
+bal_id = '10351101001'
+tu_cis = bal_id[1:5]
+et_cis = bal_id[5:8]
+bal_cis = bal_id[8:]
+iter_id = '1'
+
+GIGDB_path = f"../TU/{tu_cis}/{et_cis}/{bal_cis}/{iter_id}"
+
+print(f"{tu_cis=}")
+print(f"{et_cis=}")
+print(f"{bal_cis=}")
+print(f"{GIGDB_path}")
+#+end_src
+
+#+RESULTS:
+: tu_cis='0351'
+: et_cis='101'
+: bal_cis='001'
+: ../TU/0351/101/001/1
+
+
+*** Endpoint GET/etapa
+- puvodne se evidence metadat vedla na tabulce M_TU
+- kvuli etapizaci nyni presunuto na M_ETAPA
+
+#+begin_src python :results output
+import requests
+
+api_key = 123
+tu_cis = 9003
+et_cis = 595
+#base_api = r'http://app527.budejovice.tkpgeo.cz:8090/api/'
+base_api = f'http://dbdev2.budejovice.tkpgeo.cz:8090/api/'
+payload = {'api_key': api_key, 'tu_cis': tu_cis, 'et_cis': et_cis}
+
+r = requests.get(f'{base_api}etapa', params=payload)
+
+if r.status_code == 200:
+    print(f"API_CALL({r.status_code}) {r.request.method} {r.url}")
+    r_dict = r.json()
+    if len(r_dict['M_ETAPA']) == 0:
+        print("nx")
+    else:
+        #print(f"{r_dict['M_ETAPA'][0]['XLS']}-{r_dict['M_ETAPA'][0]['TXT']}")
+        print(f"{r_dict['M_ETAPA'][0]['METADATA_UPLOAD']}")
+        print(f"{r_dict['M_ETAPA'][0]['M_CS_METAPA']['XLS_FLAG']}")
+
+        
+#+end_src
+
+#+RESULTS:
+: API_CALL(200) GET http://dbdev2.budejovice.tkpgeo.cz:8090/api/etapa?api_key=123&tu_cis=9003&et_cis=595
+: 1
+: 2
+
+
+*** Endpoint GET/cs_ldm
+- FME parametr _MAIN_SCHEMA
+- Api_GET_main_schema
+
+#+begin_src python :results output
+import requests
+
+api_key = 123
+ldm_ver = 2
+#base_api = r'http://app527.budejovice.tkpgeo.cz:8090/api/'
+base_api = f'http://dbdev2.budejovice.tkpgeo.cz:8090/api/'
+payload = {'api_key': api_key, 'ldm_kod': ldm_ver}
+
+r = requests.get(f'{base_api}cs_ldm', params=payload)
+
+if r.status_code == 200:
+    print(f"API_CALL({r.status_code}) {r.request.method} {r.url}")
+    r_dict = r.json()
+    #print(r_dict['M_CS_LDM'][0]['MAIN_DB'])
+    if len(r_dict['M_CS_LDM'][0]) == 0:
+        print("nx")
+    else:
+        print(f"{r_dict['M_CS_LDM'][0]['MAIN_DB']}")
+        print(f"{r_dict['M_CS_LDM'][0]['ISTEM_DB']}")
+
+        
+#+end_src
+
+#+RESULTS:
+: API_CALL(200) GET http://dbdev2.budejovice.tkpgeo.cz:8090/api/cs_ldm?api_key=123&ldm_kod=2
+: IMPORT_DB2
+: ISTEM
+
+
+*** Endpoint GET/bal
+
+#+begin_src python :results output
+import requests
+
+api_key = 123
+ldm_ver = 2
+bal_id = 12411101001
+#base_api = r'http://app527.budejovice.tkpgeo.cz:8090/api/'
+base_api = f'http://dbdev2.budejovice.tkpgeo.cz:8090/api/'
+payload = {'api_key': api_key, 'bal_id': bal_id, 'iter': 1}
+
+r = requests.get(f'{base_api}bal', params=payload)
+
+if r.status_code == 200:
+    print(f"API_CALL({r.status_code}) {r.request.method} {r.url}")
+    r_dict = r.json()
+    print(r_dict)
+    if len(r_dict['M_BAL'][0]) == 0:
+        print("nx")
+    else:
+        print(f"{r_dict['M_BAL'][0]['ITER_ID']}")
+
+#+end_src
+
+#+RESULTS:
+: API_CALL(200) GET http://dbdev2.budejovice.tkpgeo.cz:8090/api/bal?api_key=123&bal_id=12411101001&iter=1
+: {'M_BAL': [{'BAL_ID': 12411101001, 'BAL_CIS': 1, 'BAL_NAME': None, 'TU_CIS': '2411', 'ET_CIS': '101', 'LDM_KOD': 1, 'ITER_ID': 1, 'ZALOZENO_UZIVATEL': None, 'BAL_STATUS': '1', 'ZALOZENO': '2024-04-24T06:19:16.000Z', 'M_ITERs': [{'ITER_ID': 1, 'BAL_ID': 12411101001, 'ZALOZENO_UZIVATEL': 'mrosz-be', 'FME_SCHEMA': 'IMPORT_5', 'FME_STAGE': '2', 'STAGE_STATUS': 2, 'STAGE_MSG': '2024-04-24 13:11:30: Stage_2 ended with success. ', 'STAGE_NEXT': None, 'ITER_START': '2024-04-24T08:42:39.000Z', 'ITER_END': None, 'ITER_STATUS': 2, 'NESS_BAL_PREDANO': None, 'NESS_BR_NAVRAT': None, 'NESS_BR_STATUS': None, 'NEW_ITER_MSG': None, 'IS_CLAIMED': None, 'SKIP_FME': None, 'ZALOZENO_DATUM': '2024-04-24T06:19:16.000Z', 'M_ITER_CLAIMs': [], 'GIGDB_RDY': 'M:/SZ/MROSZ/TU/2411/101/001/1/2411_101_001.gigdb'}]}]}
+: 1
+
+*** Endpoint GET/iter
+
+- Zjistit start iterace
+#+begin_src python :results output
+import requests
+
+api_key = 123
+ldm_ver = 2
+bal_id = 12411101001
+iter_id = 1
+#base_api = r'http://app527.budejovice.tkpgeo.cz:8090/api/'
+base_api = f'http://dbdev2.budejovice.tkpgeo.cz:8090/api/'
+
+
+payload = {'api_key': api_key, 'bal_id': bal_id, 'iter_id':iter_id}
+
+# Endpoint GET/iter
+r = requests.get(f'{base_api}iter', params=payload)
+
+if r.status_code == 200:
+    r_dict = r.json()
+    if len(r_dict['M_ITER']) == 0:
+        _PARAM = 'nx'
+        print(_PARAM)
+    else:
+        _PARAM = r_dict['M_ITER'][0]['ITER_START']
+        #print(f" >>> {type(_PARAM)} <<<")
+        print(_PARAM)
+
+#+end_src
+
+#+RESULTS:
+: 2024-04-24T08:42:39.000Z
+
+*** Endpoint GET/import-schema
+#+begin_src python :results output
+import requests
+
+api_key = 123
+ldm_ver = 2
+#bal_id = 10951101001
+bal_id = 11661101001
+iter_id = 1
+#base_api = r'http://app527.budejovice.tkpgeo.cz:8090/api/'
+base_api = f'http://dbdev2.budejovice.tkpgeo.cz:8090/api/'
+
+
+payload = {'api_key': api_key, 'bal_id': bal_id, 'iter_id':iter_id}
+
+# Endpoint GET/iter
+r = requests.get(f'{base_api}iter', params=payload)
+
+if r.status_code == 200:
+    r_dict = r.json()
+    if len(r_dict['M_ITER']) == 0:
+        _PARAM = 'nx'
+        print(_PARAM)
+    else:
+        _PARAM = r_dict['M_ITER'][0]['ITER_START']
+        #print(f" >>> {type(_PARAM)} <<<")
+        print(_PARAM)
+#+end_src
+
+#+RESULTS:
+: None
+
+
+*** FME Scripted Parameter "_PATH"
+#+begin_src python :results output
+import requests
+from pathlib import Path
+
+par_name = '_PATH'
+base_path = r'm:\SZ\MROSZ\TU'
+bal_id = '12411101001'
+iter_id = '1'
+base_api = f'http://dbdev2.budejovice.tkpgeo.cz:8090/api/'
+ldm_ver = 2
+api_key = 123
+tu_cis = bal_id[1:5]
+et_cis = bal_id[5:8]
+bal_cis = bal_id[8:]
+
+_dir = Path(base_path).joinpath(tu_cis, et_cis, bal_cis, iter_id)
+_path = list(_dir.glob('*.gigdb'))
+
+if len(_path) == 0:
+    print("Neni soubor")
+else:
+    if _path[0].exists():
+        print("Got a path")
+    else:
+        print('nx')
+
+#if _path[0].exists():  
+    #print(str(_path[0]))
+#else:
+    #print('nx')
+#+end_src
+
+#+RESULTS:
+: Got a path
+
+*** Endpoint GET/etapa
+- FME parametr _MAIN_SCHEMA
+- Api_GET_main_schema
+
+#+begin_src python :results output
+import requests
+
+api_key = 123
+tu_cis = 1891
+et_cis = 101
+#base_api = r'http://app527.budejovice.tkpgeo.cz:8090/api/'
+base_api = f'http://dbdev2.budejovice.tkpgeo.cz:8090/api/'
+payload = {'api_key': api_key,  'tu_cis': tu_cis, 'et_cis': et_cis}
+
+r = requests.get(f'{base_api}etapa', params=payload)
+
+if r.status_code == 200:
+    print(f"")
+    r_dict = r.json()
+    #print(r_dict['M_CS_LDM'][0]['MAIN_DB'])
+    if len(r_dict['M_ETAPA'][0]) == 0:
+        print("nx")
+    else:
+        print(f"{r_dict['M_ETAPA'][0]['M_CS_METAPA']['XLS_FLAG']}")
+
+        
+#+end_src
+
+#+RESULTS:
+: 
+: 1
+
+
+*** Python OS get username
+#+begin_src python :results output
+import  sys
+print(dir(sys))
+#+end_src
+
+#+RESULTS:
+: ['__breakpointhook__', '__displayhook__', '__doc__', '__excepthook__', '__interactivehook__', '__loader__', '__name__', '__package__', '__spec__', '__stderr__', '__stdin__', '__stdout__', '__unraisablehook__', '_base_executable', '_clear_type_cache', '_current_frames', '_debugmallocstats', '_enablelegacywindowsfsencoding', '_framework', '_getframe', '_git', '_home', '_xoptions', 'addaudithook', 'api_version', 'argv', 'audit', 'base_exec_prefix', 'base_prefix', 'breakpointhook', 'builtin_module_names', 'byteorder', 'call_tracing', 'copyright', 'displayhook', 'dllhandle', 'dont_write_bytecode', 'exc_info', 'excepthook', 'exec_prefix', 'executable', 'exit', 'flags', 'float_info', 'float_repr_style', 'get_asyncgen_hooks', 'get_coroutine_origin_tracking_depth', 'getallocatedblocks', 'getdefaultencoding', 'getfilesystemencodeerrors', 'getfilesystemencoding', 'getprofile', 'getrecursionlimit', 'getrefcount', 'getsizeof', 'getswitchinterval', 'gettrace', 'getwindowsversion', 'hash_info', 'hexversion', 'implementation', 'int_info', 'intern', 'is_finalizing', 'maxsize', 'maxunicode', 'meta_path', 'modules', 'path', 'path_hooks', 'path_importer_cache', 'platform', 'platlibdir', 'prefix', 'pycache_prefix', 'set_asyncgen_hooks', 'set_coroutine_origin_tracking_depth', 'setprofile', 'setrecursionlimit', 'setswitchinterval', 'settrace', 'stderr', 'stdin', 'stdout', 'thread_info', 'unraisablehook', 'version', 'version_info', 'warnoptions', 'winver']

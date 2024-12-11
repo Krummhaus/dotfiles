@@ -28,3 +28,4 @@ order_pizza("big", "olives", "ananas", delivery=True, tip=5)
 : ('olives', 'ananas')
 : olives ananas
 : {'delivery': True, 'tip': 5}
+: delivery tip

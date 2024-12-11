@@ -24,13 +24,18 @@ class GeometricObject:
 
 class Circle(GeometricObject):
     """A representation of a circle."""
-
+    
+    # Konstruktor
     def __init__(self, radius):
         self.radius = radius
 
+    # Metoda / funkce
     def area(self):
         return math.pi * self.radius ** 2
 
+    # Dekorátor @property převádí metodu třídy na atribut, což znamená,
+    # že ji můžete volat bez závorek.
+    # Místo volání 'circle.diameter()' stačí použít 'circle.diameter'.
     @property # 
     def diameter(self):
         return 2 * self.radius
@@ -54,3 +59,40 @@ print(c2.radius) # 1
 : 20
 : 1
 
+
+#+begin_src python :results output
+a = 9
+print(a.bit_length())
+print(type(a))
+print((1).bit_length())
+#+end_src
+
+#+RESULTS:
+: 4
+: <class 'int'>
+: 1
+
+#+begin_src python :results output
+l = '1'
+a = l.split(',')
+print(a)
+print(type(a))
+# Define the two lists
+xls_id = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+gigdb_id = [3, 5, 6, 10, 16]  # Added an extra item for testing
+
+# Find missing items
+missing_items = [item for item in gigdb_id if item not in xls_id]
+
+# Check if all items are present
+if not missing_items:
+    print("All items from gigdb_id are present in xls_id.")
+else:
+    print("The following items are missing from xls_id:", missing_items)
+
+#+end_src
+
+#+RESULTS:
+: ['1']
+: <class 'list'>
+: The following items are missing from xls_id: [16]

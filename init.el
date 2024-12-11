@@ -123,7 +123,7 @@
 
 
 ;;; Font
-(set-face-attribute 'default nil :height 115)
+(set-face-attribute 'default nil :height 116)
 ;(add-to-list 'default-frame-alist '(font . "Iosevka-12" ))
 ;(add-to-list 'default-frame-alist '(font . "Cascadia Mono 12" ))
 ;(set-face-attribute 'default t :font "Cascadia Mono" )
@@ -219,7 +219,7 @@
 (use-package org-roam
   :ensure t
   :custom
-  (org-roam-diretory
+  (org-roam-directory
    (if (eq system-type 'windows-nt)
        "c:\\dotfiles\\roam\\inbox"
        "/home/krumm/dotfiles/roam/inbox"))

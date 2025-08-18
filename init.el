@@ -289,12 +289,14 @@
     )
 
 ;;; Custom headings that inherit color form default
-(custom-set-faces
- '(org-level-1 ((t (:inherit default :height 1.6  :weight semi-bold))))
- '(org-level-2 ((t (:inherit default :height 1.4  :weight semi-bold))))
- '(org-level-3 ((t (:inherit default :height 1.2  :weight semi-bold))))
- '(org-level-4 ((t (:inherit default :height 1.1  :weight semi-bold))))
- '(org-level-5 ((t (:inherit default :height 1.05 :weight semi-bold)))))
+(when (eq system-type 'windows-nt)
+  ;; Custom headings that inherit color from default on Windows
+  (custom-set-faces
+   '(org-level-1 ((t (:inherit default :height 1.6  :weight semi-bold))))
+   '(org-level-2 ((t (:inherit default :height 1.4  :weight semi-bold))))
+   '(org-level-3 ((t (:inherit default :height 1.2  :weight semi-bold))))
+   '(org-level-4 ((t (:inherit default :height 1.1  :weight semi-bold))))
+   '(org-level-5 ((t (:inherit default :height 1.05 :weight semi-bold))))))
 
 ;;; Org-Babel
 (org-babel-do-load-languages

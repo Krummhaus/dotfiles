@@ -1,0 +1,10 @@
+:PROPERTIES:
+:ID:       683b5a61-8570-4358-8333-f00efe193b4d
+:END:
+#+title: win-hard-links
+
+* Hardlinks
+
+```sh
+mklink /H "C:\Users\admin\AppData\Roaming\.emacs.d\init.el" "C:\dotfiles\init.el"
+```

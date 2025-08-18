@@ -1,0 +1,43 @@
+:PROPERTIES:
+:ID:       47cd4609-0d04-4922-bcb8-3fba2b71e971
+:END:
+#+title: cpp-playground
+
+
+* Function Pointers
+- Charles Cabergs ytb
+
+#+begin_src C++ :includes <stdio.h>
+#include <stdbool.h>
+
+int foo(int x, int y) {
+    return x + y;
+}
+
+bool p(int x) {
+    return x % 2;
+}
+
+void print_if(int xs[6], bool (*pred)(int)) {
+    for (int i = 0; i < 6; i++) {
+	if (pred(xs[i])) {
+printf("%d\n", xs[i]);
+	}
+    }
+}
+
+int main(void) {
+    int xs[] = {1, 2, 3, 4, 5, 6};
+
+// this is just pointet to function
+    int (*f)(int, int) = foo;
+
+    printf("%d\n", f(3, 4));
+kd
+
+    return 0;
+}
+#+end_src
+
+#+RESULTS:
+: 7

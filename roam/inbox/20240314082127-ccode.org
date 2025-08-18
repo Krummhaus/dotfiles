@@ -10,3 +10,6 @@ let see Babel on Windows with C code
   int b=1;
   printf("%d\n", a+b);
 #+end_src
+
+#+RESULTS:
+: 2

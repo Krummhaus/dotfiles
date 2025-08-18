@@ -10,11 +10,12 @@
 
 #+begin_src C++ :results output 
 #include <iostream>
-usinng namespace std;
+using namespace std;
 int main() {
-cout << "hello" << endl;
+cout << "Babel C++" << endl;
 }
 
 #+end_src
 
 #+RESULTS:
+: Babel C++

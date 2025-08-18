@@ -61,7 +61,9 @@ fi
 
 if [ "$color_prompt" = yes ]; then
     #PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
-    PS1='(\t) | \W \$ '
+    #PS1='(\t) | \W \$ '
+    PS1='\[\033[01;33m\]\A\[\033[00m\] \[\033[01;36m\]../\W\[\033[00m\]\$ '
+
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 fi
@@ -125,6 +127,9 @@ fi
 # export LD_LIBRARY_PATH=$ORACLE_HOME:$LD_LIBRARY_PATH
 # export PATH=$ORACLE_HOME:$PATH
 export EDITOR=vim
+export PATH=$PATH:/snap/intellij-idea-community/560/plugins/Kotlin/kotlinc/bin
+export PATH=$PATH:/opt/jdk-11/bin
+
 
 # Custom function `dat`
 duit(){ w3m https://lite.duckduckgo.com/html/?q="$*"; }

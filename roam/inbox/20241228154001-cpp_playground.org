@@ -33,7 +33,6 @@ int main(void) {
     int (*f)(int, int) = foo;
 
     printf("%d\n", f(3, 4));
-kd
 
     return 0;
 }

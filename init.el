@@ -147,12 +147,13 @@
 
 
 ;;; Font
-(set-face-attribute 'default nil :height 115)
+;(set-face-attribute 'default nil :height 115)
 ;(add-to-list 'default-frame-alist '(font . "Iosevka-12" ))
 ;(add-to-list 'default-frame-alist '(font . "Cascadia Mono 12" ))
 ;(set-face-attribute 'default t :font "Cascadia Mono" )
 ;(add-to-list 'default-frame-alist '(font . "Liberation Mono 10" ))
 ;(set-face-attribute 'default t :font "Liberation Mono" )
+(set-face-attribute 'default nil :font "0xProto Nerd Font-10" )
 
 ;;; Markdown
 ;; Dont show markup tags (M-x markdown-toggle-markup-hiding)
@@ -168,11 +169,11 @@
   :config
   ;; Custom headings in markup
   (custom-set-faces
-   ;'(markdown-header-face ((t (:inherit font-lock-function-name-face :weight bold :family "variable-pitch"))))
+   '(default ((t (:font "0xProto Nerd Font-10"))))  ; Ensure default font for markdown
    '(markdown-header-face ((t (:inherit font-lock-type-face :weight semibold :family "default"))))
-   '(markdown-header-face-1 ((t (:inherit markdown-header-face :height 1.5))))
-   '(markdown-header-face-2 ((t (:inherit markdown-header-face :height 1.3))))
-   '(markdown-header-face-3 ((t (:inherit markdown-header-face :height 1.1))))))
+   '(markdown-header-face-1 ((t (:inherit markdown-header-face :height 1.7))))
+   '(markdown-header-face-2 ((t (:inherit markdown-header-face :height 1.4))))
+   '(markdown-header-face-3 ((t (:inherit markdown-header-face :height 1.2))))))
 
 ;;; Magit
 ;(use-package magit

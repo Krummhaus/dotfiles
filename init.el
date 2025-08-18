@@ -170,7 +170,7 @@
   ;; Custom headings in markup
   (custom-set-faces
    '(default ((t (:font "0xProto Nerd Font-10"))))  ; Ensure default font for markdown
-   '(markdown-header-face ((t (:inherit font-lock-type-face :weight semibold :family "default"))))
+   '(markdown-header-face ((t (:inherit font-lock-type-face :weight regular :family "default"))))
    '(markdown-header-face-1 ((t (:inherit markdown-header-face :height 1.7))))
    '(markdown-header-face-2 ((t (:inherit markdown-header-face :height 1.4))))
    '(markdown-header-face-3 ((t (:inherit markdown-header-face :height 1.2))))))
@@ -287,6 +287,14 @@
     (sequence "TODO" "In Progress" "|" "Waiting" "DONE" "Completed")
     (sequence "Queue" "Working On" "On Hold" "|" "Finished" "Worked On" "Removed")))
     )
+
+;;; Custom headings that inherit color form default
+(custom-set-faces
+ '(org-level-1 ((t (:inherit default :height 1.6  :weight semi-bold))))
+ '(org-level-2 ((t (:inherit default :height 1.4  :weight semi-bold))))
+ '(org-level-3 ((t (:inherit default :height 1.2  :weight semi-bold))))
+ '(org-level-4 ((t (:inherit default :height 1.1  :weight semi-bold))))
+ '(org-level-5 ((t (:inherit default :height 1.05 :weight semi-bold)))))
 
 ;;; Org-Babel
 (org-babel-do-load-languages

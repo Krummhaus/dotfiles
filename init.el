@@ -153,7 +153,8 @@
 ;(set-face-attribute 'default t :font "Cascadia Mono" )
 ;(add-to-list 'default-frame-alist '(font . "Liberation Mono 10" ))
 ;(set-face-attribute 'default t :font "Liberation Mono" )
-(set-face-attribute 'default nil :font "0xProto Nerd Font-10" )
+;(set-face-attribute 'default nil :font "0xProto Nerd Mono 10" )
+(set-face-attribute 'default nil :font "Cascadia Code" )
 
 ;;; Markdown
 ;; Dont show markup tags (M-x markdown-toggle-markup-hiding)

@@ -29,6 +29,8 @@
 (global-visual-line-mode 1)  ; Enable visual-line-mode globally
 (setq-default word-wrap t)    ; Enable word wrapping
 (setq visual-line-fringe-indicators '(nil . nil))  ; Disable continuation arrows
+;; Turn-off sounds
+(setq visible-bell t)
 
 
 
@@ -314,6 +316,10 @@
    (sql . t)      ; Enable SQL
    ;; Add other languages as needed
    ))
+
+;;; Babel-Python for Linux
+(when (eq system-type 'gnu/linux)
+  (setq org-babel-python-command "python3"))
 
 (use-package emacsql
   :ensure t)

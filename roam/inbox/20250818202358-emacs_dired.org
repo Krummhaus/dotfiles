@@ -1,0 +1,18 @@
+:PROPERTIES:
+:ID:       ad270ec9-23a3-4ec7-807e-5da1c49448bd
+:END:
+#+title: emacs-dired
+
+*** Emacs dired basics controls
+
+    RET or f Open file or directory
+    o   Open file in a separate window
+    ^   Up directory
+    +   Create a directory
+    R   Rename / move
+    C   Copy
+    M   Change file/directory mode (unix file/directory permissions)
+    d   Delete
+    m   Mark
+    u   Unmark / undelete
+    x   'Expunge' -- i.e. actually delete files/directories marked for deletion

@@ -132,18 +132,22 @@
 
 ;;;  =============================
 
-;;; Unicode Everywhere
-(setq utf-translate-cjk-mode nil) ; disable CJK coding/encoding (Chinese/Japanese/Korean characters)
-(set-language-environment 'utf-8)
-(set-keyboard-coding-system 'utf-8-mac) ; For old Carbon emacs on OS X only
-(set locale-coding-system 'utf-8)
+;;; UTF-8 Everywhere
+(set-language-environment "UTF-8")
 (set-default-coding-systems 'utf-8)
 (set-terminal-coding-system 'utf-8)
+(set-keyboard-coding-system 'utf-8)
 (set-selection-coding-system
-(if (eq system-type 'windows-nt)
-    'utf-16-le  ;; https://rufflewind.com/2014-07-20/pasting-unicode-in-emacs-on-windows
-    'utf-8))
+ (if (eq system-type 'windows-nt)
+     'utf-16-le  ;; needed for clipboard on Windows
+   'utf-8))
+(setq locale-coding-system 'utf-8)
 (prefer-coding-system 'utf-8)
+
+;; Make sure subprocesses (shell, compile, Python) use UTF-8
+(add-to-list 'process-coding-system-alist '(".*" . (utf-8 . utf-8)))
+(setenv "LANG" "en_US.UTF-8")
+(setenv "LC_ALL" "en_US.UTF-8")
 
 
 ;;; Font
@@ -291,11 +295,15 @@
 
 ;;; Custom headings that inherit color form default
 (custom-set-faces
-'(org-level-1 ((t (:inherit default :height 1.6  :weight semi-bold))))
-'(org-level-2 ((t (:inherit default :height 1.4  :weight semi-bold))))
-'(org-level-3 ((t (:inherit default :height 1.2  :weight semi-bold))))
-'(org-level-4 ((t (:inherit default :height 1.1  :weight semi-bold))))
-'(org-level-5 ((t (:inherit default :height 1.05 :weight semi-bold)))))
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(org-level-1 ((t (:inherit default :height 1.6 :weight semi-bold))))
+ '(org-level-2 ((t (:inherit default :height 1.4 :weight semi-bold))))
+ '(org-level-3 ((t (:inherit default :height 1.2 :weight semi-bold))))
+ '(org-level-4 ((t (:inherit default :height 1.1 :weight semi-bold))))
+ '(org-level-5 ((t (:inherit default :height 1.05 :weight semi-bold)))))
 
 ;;; Org-Babel
 (org-babel-do-load-languages
@@ -359,4 +367,12 @@
           (lambda ()
             (setq-local comint-prompt-read-only t)))
 
+
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   '(command-log-mode annalist auto-compile elpy evil-leader evil-surround gptel ivy lv magit markdown-mode org-ai org-roam use-package)))
 

@@ -154,7 +154,8 @@
 ;(add-to-list 'default-frame-alist '(font . "Liberation Mono 10" ))
 ;(set-face-attribute 'default t :font "Liberation Mono" )
 ;(set-face-attribute 'default nil :font "0xProto Nerd Mono 10" )
-(set-face-attribute 'default nil :font "Cascadia Code" )
+(when (eq system-type 'windows-nt)
+  (set-face-attribute 'default nil :font "Cascadia Code"))
 
 ;;; Markdown
 ;; Dont show markup tags (M-x markdown-toggle-markup-hiding)
@@ -170,8 +171,7 @@
   :config
   ;; Custom headings in markup
   (custom-set-faces
-   '(default ((t (:font "0xProto Nerd Font-10"))))  ; Ensure default font for markdown
-   '(markdown-header-face ((t (:inherit font-lock-type-face :weight regular :family "default"))))
+   '(markdown-header-face ((t (:inherit font-lock-type-face :weight semi-bold ))))
    '(markdown-header-face-1 ((t (:inherit markdown-header-face :height 1.7))))
    '(markdown-header-face-2 ((t (:inherit markdown-header-face :height 1.4))))
    '(markdown-header-face-3 ((t (:inherit markdown-header-face :height 1.2))))))
@@ -290,14 +290,12 @@
     )
 
 ;;; Custom headings that inherit color form default
-(when (eq system-type 'windows-nt)
-  ;; Custom headings that inherit color from default on Windows
-  (custom-set-faces
-   '(org-level-1 ((t (:inherit default :height 1.6  :weight semi-bold))))
-   '(org-level-2 ((t (:inherit default :height 1.4  :weight semi-bold))))
-   '(org-level-3 ((t (:inherit default :height 1.2  :weight semi-bold))))
-   '(org-level-4 ((t (:inherit default :height 1.1  :weight semi-bold))))
-   '(org-level-5 ((t (:inherit default :height 1.05 :weight semi-bold))))))
+(custom-set-faces
+'(org-level-1 ((t (:inherit default :height 1.6  :weight semi-bold))))
+'(org-level-2 ((t (:inherit default :height 1.4  :weight semi-bold))))
+'(org-level-3 ((t (:inherit default :height 1.2  :weight semi-bold))))
+'(org-level-4 ((t (:inherit default :height 1.1  :weight semi-bold))))
+'(org-level-5 ((t (:inherit default :height 1.05 :weight semi-bold)))))
 
 ;;; Org-Babel
 (org-babel-do-load-languages

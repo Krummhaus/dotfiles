@@ -25,6 +25,25 @@
 (setq warning-minimum-level :error)
 ;;; Brackets
 (electric-pair-mode 1)
+;; wrapp lines
+(global-visual-line-mode 1)  ; Enable visual-line-mode globally
+(setq-default word-wrap t)    ; Enable word wrapping
+(setq visual-line-fringe-indicators '(nil . nil))  ; Disable continuation arrows
+
+
+
+;;; Colouring 'man' pages =====
+;;  Add the follows to your init file and use M-x man or the man command in
+;;  eshell to view man pages: (the colors fits the wombat theme; you can change them for yourself)
+(require 'man)
+(set-face-attribute 'Man-overstrike nil :inherit 'bold :foreground "orange red")
+(set-face-attribute 'Man-underline nil :inherit 'underline :foreground "forest green")
+
+;;Or to be theme agnostic:
+;(require 'man)
+;(set-face-attribute 'Man-overstrike nil :inherit font-lock-type-face :bold t)
+;(set-face-attribute 'Man-underline nil :inherit font-lock-keyword-face :underline t
+;;; =====
 
 ;;; Line
 ;; Line Numbers
@@ -40,7 +59,8 @@
 
 ;;; Package Repositories
 (require 'package)
-(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
+(setq package-archives '(("melpa" . "https://melpa.org/packages/")
+                         ("gnu" . "https://elpa.gnu.org/packages/")))
 (package-initialize)
 
 ;;; Use Package
@@ -58,8 +78,11 @@
   :ensure t
   :init
   (setq evil-want-keybinding nil)
+  :custom
+  (evil-symbol-word-search t)
   :config
-  (evil-mode 1))
+  (evil-mode 1)
+  (evil-set-undo-system 'undo-redo))
 
 ;; Evil imap jj <Esc>
 (defun xwl-jj-as-esc ()
@@ -85,7 +108,7 @@
 (evil-set-initial-state 'dired-mode 'emacs)
 (evil-set-initial-state 'magit-mode 'emacs)
 
-;;; Custom key bindings
+;;;  === Custom key bindings ====
 (global-set-key (kbd "<C-tab>") 'other-window)
 (global-set-key (kbd "C-,") 'dupl-line)
 (global-set-key (kbd "C-5") 'compile)
@@ -107,6 +130,7 @@
 ;; "M-x" remap to "Shift + Space"
 (global-set-key (kbd "S-SPC") 'execute-extended-command)
 
+;;;  =============================
 
 ;;; Unicode Everywhere
 (setq utf-translate-cjk-mode nil) ; disable CJK coding/encoding (Chinese/Japanese/Korean characters)
@@ -123,7 +147,7 @@
 
 
 ;;; Font
-(set-face-attribute 'default nil :height 116)
+(set-face-attribute 'default nil :height 115)
 ;(add-to-list 'default-frame-alist '(font . "Iosevka-12" ))
 ;(add-to-list 'default-frame-alist '(font . "Cascadia Mono 12" ))
 ;(set-face-attribute 'default t :font "Cascadia Mono" )
@@ -144,7 +168,8 @@
   :config
   ;; Custom headings in markup
   (custom-set-faces
-   '(markdown-header-face ((t (:inherit font-lock-function-name-face :weight bold :family "variable-pitch"))))
+   ;'(markdown-header-face ((t (:inherit font-lock-function-name-face :weight bold :family "variable-pitch"))))
+   '(markdown-header-face ((t (:inherit font-lock-type-face :weight semibold :family "default"))))
    '(markdown-header-face-1 ((t (:inherit markdown-header-face :height 1.5))))
    '(markdown-header-face-2 ((t (:inherit markdown-header-face :height 1.3))))
    '(markdown-header-face-3 ((t (:inherit markdown-header-face :height 1.1))))))
@@ -158,7 +183,66 @@
   :ensure t)
 
 ;;; Ido Mode
-(ido-mode t)
+(use-package ido
+  :config
+  (ido-mode t)
+  (setq ido-everywhere t)
+  (setq ido-enable-flex-matching t)
+  (setq ido-all-frames nil)
+  )
+
+;;; --- Company ---
+(use-package company
+  :init
+  (global-company-mode)
+  (add-hook 'emacs-lisp-mode-hook 'company-mode)
+  :ensure t
+  :config
+  (company-mode)
+  (setq company-idle-delay 0.2)
+  (setq minimum-prefix-length 2)
+  (setq company-global-modes '(not processing-mode text-mode)) ;; Not use company on those modes
+  (add-to-list 'company-backends 'company-c-headers) ;; Backend for header files
+  (add-to-list 'company-backends 'company-elisp)
+  (when (boundp 'company-backends)
+    (make-local-variable 'company-backends)
+    ;; remove
+    (setq company-backends (delete 'company-clang company-backends))
+    ;; add
+    ;;(add-to-list 'company-backends 'company-dabbrev)
+    )
+  
+  :bind (:map company-search-map  
+              ("C-t" . company-search-toggle-filtering)
+              ("C-j" . company-select-next)
+              ("C-k" . company-select-previous)
+              :map company-active-map
+              ("C-j" . company-select-next)
+              ("C-k" . company-select-previous)))
+
+;;; Ya Snippets
+(use-package yasnippet                  ; Snippets
+  :ensure t
+  :config
+  ;; Set custom snippets path based on the system type
+  (setq yas-snippet-dirs
+        (list (if (eq system-type 'windows-nt)
+                  "c:\\dotfiles\\snippets"
+                "/home/krumm/dotfiles/snippets")))
+
+  ;; Configure yasnippet settings
+  (setq yas-verbosity 1)                ; No need to be so verbose
+  (setq yas-wrap-around-region t)       ; Wrap snippets around region
+
+  ;; Reload snippets after setting paths
+  (yas-reload-all)
+
+  ;; Enable yasnippet globally
+  (yas-global-mode))
+
+;;(use-package yasnippet-snippets         ; Collection of snippets
+  ;;:ensure t)
+
 
 ;; Define the duplicate-line function
 (defun dupl-line ()
@@ -183,7 +267,6 @@
 
 ;; Add the hook to the before-save-hook
 (add-hook 'before-save-hook 'clang-format-on-save)
-
 
 ;;; Org-Mode
 (use-package org
@@ -214,6 +297,8 @@
    ;; Add other languages as needed
    ))
 
+(use-package emacsql
+  :ensure t)
 
 ;;; Org-Roam
 (use-package org-roam
@@ -239,17 +324,29 @@
 						  '(:immediate-finish t)))))
     (apply #'org-roam-node-insert args)))
 
+;; Install GPTEL if not installed
+(unless (package-installed-p 'gptel)
+  (package-install 'gptel))
 
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   '(magit markdown-mode evil-collection gruber-darker-theme evil-org evil-leader)))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
+(require 'gptel)
+
+;; Set your OpenAI API key here (or via environment variable)
+;; Load secrets.el
+(when (file-exists-p "~/.emacs.d/secrets.el")
+  (load "~/.emacs.d/secrets.el"))
+
+;; Assign the key to GPTEL
+(setq gptel-api-key openai-api-key)
+
+;; Set default model to GPT-4 Mini
+(setq gptel-default-model "gpt-4o-mini")
+
+;; Optional: convenient keybinding to launch GPTEL
+(global-set-key (kbd "C-c g") 'gptel)
+
+;; Optional: auto-start GPTEL buffer in comint mode
+(add-hook 'gptel-mode-hook
+          (lambda ()
+            (setq-local comint-prompt-read-only t)))
+
+

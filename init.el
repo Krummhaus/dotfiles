@@ -107,13 +107,9 @@
 (define-key evil-replace-state-map "j" 'xwl-jj-as-esc)
 
 ;; Turn of Evil in dired mode
-;(evil-set-initial-state 'dired-mode 'emacs)
-;(evil-set-initial-state 'magit-mode 'emacs)
-(dolist (mode-hook '(Info-mode-hook
-                     dired-mode-hook
-                     magit-status-mode-hook))
-  (add-hook mode-hook (lambda () (evil-emacs-state))))
-
+(evil-set-initial-state 'Info-mode 'emacs)
+(evil-set-initial-state 'dired-mode 'emacs)
+(evil-set-initial-state 'magit-mode 'emacs)
 
 ;;;  === Custom key bindings ====
 (global-set-key (kbd "<C-tab>") 'other-window)

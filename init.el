@@ -24,7 +24,7 @@
 ;; Warning levels
 (setq warning-minimum-level :error)
 ;;; Brackets
-(electric-pair-mode 1)
+;(electric-pair-mode 1)
 ;; wrapp lines
 (global-visual-line-mode 1)  ; Enable visual-line-mode globally
 (setq-default word-wrap t)    ; Enable word wrapping
@@ -117,7 +117,7 @@
 (global-set-key (kbd "C-5") 'compile)
 (global-set-key (kbd "C-0") 'shell-command)
 ;; "M-x" remap to "Shift + Space"
-(global-set-key (kbd "S-SPC") 'execute-extended-command)
+;(global-set-key (kbd "S-SPC") 'execute-extended-command)
 ;; Shift + Insert to Control + Space ..paste from sys clipboard
 (global-set-key (kbd "C-SPC") #'yank)
 
@@ -371,11 +371,11 @@
 ;; Configure gptel to use org-mode syntax
 (setq gptel-org-mode t)
 ;; Load gptel
-(add-hook 'org-mode-hook (lambda () (gptel-mode 1)))
+;(add-hook 'org-mode-hook (lambda () (gptel-mode 1)))
 ;; Optional: auto-start GPTEL buffer in comint mode
-(add-hook 'gptel-mode-hook
-          (lambda ()
-            (setq-local comint-prompt-read-only t)))
+;(add-hook 'gptel-mode-hook
+          ;(lambda ()
+            ;(setq-local comint-prompt-read-only t)))
 
 ;; Gptel prompts
 (gptel-make-preset 'gpt4coding                       ;preset name, a symbol

@@ -305,16 +305,13 @@
     )
 
 ;;; Custom headings that inherit color form default
+;; https://htmlcolorcodes.com/color-wheel/
 (custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(org-level-1 ((t (:inherit default :height 1.6 :weight semi-bold))))
- '(org-level-2 ((t (:inherit default :height 1.4 :weight semi-bold))))
- '(org-level-3 ((t (:inherit default :height 1.2 :weight semi-bold))))
- '(org-level-4 ((t (:inherit default :height 1.1 :weight semi-bold))))
- '(org-level-5 ((t (:inherit default :height 1.05 :weight semi-bold)))))
+ '(org-level-1 ((t (:foreground "#F099FF" :weight bold :height 1.35)))) 
+ '(org-level-2 ((t (:foreground "#99A8FF" :weight semi-bold :height 1.2)))) 
+ '(org-level-3 ((t (:foreground "#A8FF99" :weight semi-bold :height 1.1))))
+ '(org-level-4 ((t (:foreground "#DBFF99" :weight semi-bold :height 1.05)))) 
+ '(org-level-5 ((t (:foreground "#FFF099" :weight semi-bold :height 1.0))))) 
 
 ;;; Org-Babel
 (org-babel-do-load-languages
@@ -388,11 +385,25 @@
   :system "You are an expert coding assistant. Your role is to provide high-quality code solutions, refactorings, and explanations."
   :tools '("read_buffer" "modify_buffer")) ;gptel tools or tool names
 
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   '(command-log-mode annalist auto-compile elpy evil-leader evil-surround gptel ivy lv magit markdown-mode org-ai org-roam use-package)))
 
+;;; Email client GNUS
+(setq gnus-select-m(setq gnus-select-method
+      '(nnimap "tkpgeo"
+               (nnimap-address "budejovice.tkpgeo.cz")
+               (nnimap-server-port 993)
+               (nnimap-stream ssl)
+               (nnimap-user "kalina")))
+      )
+;; Sort threads by date (most recent first)
+(setq gnus-thread-sort-functions
+      '((not gnus-thread-sort-by-date)))
+
+;; Sort articles by date
+(setq gnus-thread-sort-functions 'gnus-thread-sort-by-date)
+
+;; Optional: show newest articles at the top in summary buffer
+(setq gnus-article-sort-functions
+      '(gnus-article-sort-by-date))
+
+;; Optional: make Gnus fetch headers efficiently
+(setq gnus-fetch-old-headers t)

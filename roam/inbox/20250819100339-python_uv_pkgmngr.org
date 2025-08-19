@@ -1,0 +1,13 @@
+:PROPERTIES:
+:ID:       3488fbcb-aa06-4ba6-b2b4-286a55136038
+:END:
+#+title: python-uv-pkgmngr
+* Python package manager
+
+
+
+*** Returns list with python istalled by UV
+uv python list
+
+*** Installs package to a specifiv UV python
+uv pip install --python "C:\Program Files\Python312\python.exe" requests

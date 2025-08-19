@@ -116,6 +116,10 @@
 (global-set-key (kbd "C-,") 'dupl-line)
 (global-set-key (kbd "C-5") 'compile)
 (global-set-key (kbd "C-0") 'shell-command)
+;; "M-x" remap to "Shift + Space"
+(global-set-key (kbd "S-SPC") 'execute-extended-command)
+;; Shift + Insert to Control + Space ..paste from sys clipboard
+(global-set-key (kbd "C-SPC") #'yank)
 
 ;; for clang-format
 (defun insert-clang-format-off ()
@@ -130,8 +134,6 @@
 (global-set-key (kbd "C-c f") 'insert-clang-format-off)
 (global-set-key (kbd "C-c o") 'insert-clang-format-on)
 
-;; "M-x" remap to "Shift + Space"
-(global-set-key (kbd "S-SPC") 'execute-extended-command)
 
 ;;;  =============================
 
@@ -154,7 +156,7 @@
 
 
 ;;; Font
-;(set-face-attribute 'default nil :height 115)
+(set-face-attribute 'default nil :height 100)
 ;(add-to-list 'default-frame-alist '(font . "Iosevka-12" ))
 ;(add-to-list 'default-frame-alist '(font . "Cascadia Mono 12" ))
 ;(set-face-attribute 'default t :font "Cascadia Mono" )
@@ -355,31 +357,36 @@
 						  '(:immediate-finish t)))))
     (apply #'org-roam-node-insert args)))
 
-;; Install GPTEL if not installed
+;;; Install GPTEL if not installed
 (unless (package-installed-p 'gptel)
   (package-install 'gptel))
-
 (require 'gptel)
-
 ;; Set your OpenAI API key here (or via environment variable)
 ;; Load secrets.el
 (when (file-exists-p "~/.emacs.d/secrets.el")
   (load "~/.emacs.d/secrets.el"))
-
 ;; Assign the key to GPTEL
 (setq gptel-api-key openai-api-key)
-
 ;; Set default model to GPT-4 Mini
 (setq gptel-default-model "gpt-4o-mini")
-
 ;; Optional: convenient keybinding to launch GPTEL
 (global-set-key (kbd "C-c g") 'gptel)
-
+;; Configure gptel to use org-mode syntax
+(setq gptel-org-mode t)
+;; Load gptel
+(add-hook 'org-mode-hook (lambda () (gptel-mode 1)))
 ;; Optional: auto-start GPTEL buffer in comint mode
 (add-hook 'gptel-mode-hook
           (lambda ()
             (setq-local comint-prompt-read-only t)))
 
+;; Gptel prompts
+(gptel-make-preset 'gpt4coding                       ;preset name, a symbol
+  :description "A preset optimized for coding tasks" ;for your reference
+  :backend "ChatGPT"                     ;gptel backend or backend name
+  :model 'gpt-4o-mini
+  :system "You are an expert coding assistant. Your role is to provide high-quality code solutions, refactorings, and explanations."
+  :tools '("read_buffer" "modify_buffer")) ;gptel tools or tool names
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.

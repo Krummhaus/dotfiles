@@ -116,6 +116,8 @@
 (global-set-key (kbd "C-,") 'dupl-line)
 (global-set-key (kbd "C-5") 'compile)
 (global-set-key (kbd "C-0") 'shell-command)
+
+(global-set-key (kbd "M-f") 'ido-find-file)
 ;; "M-x" remap to "Shift + Space"
 ;(global-set-key (kbd "S-SPC") 'execute-extended-command)
 ;; Shift + Insert to Control + Space ..paste from sys clipboard

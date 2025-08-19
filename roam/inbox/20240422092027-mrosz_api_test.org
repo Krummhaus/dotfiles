@@ -106,8 +106,8 @@ import requests
 
 api_key = 123
 ldm_ver = 2
-#base_api = r'http://app527.budejovice.tkpgeo.cz:8090/api/'
-base_api = f'http://dbdev2.budejovice.tkpgeo.cz:8090/api/'
+base_api = r'http://app527.budejovice.tkpgeo.cz:8090/api/'
+#base_api = f'http://dbdev2.budejovice.tkpgeo.cz:8090/api/'
 payload = {'api_key': api_key, 'ldm_kod': ldm_ver}
 
 r = requests.get(f'{base_api}cs_ldm', params=payload)
@@ -126,7 +126,7 @@ if r.status_code == 200:
 #+end_src
 
 #+RESULTS:
-: API_CALL(200) GET http://dbdev2.budejovice.tkpgeo.cz:8090/api/cs_ldm?api_key=123&ldm_kod=2
+: API_CALL(200) GET http://app527.budejovice.tkpgeo.cz:8090/api/cs_ldm?api_key=123&ldm_kod=2
 : IMPORT_DB2
 : ISTEM
 

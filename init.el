@@ -294,6 +294,12 @@
     (setq org-todo-keywords '(
     (sequence "TODO" "In Progress" "|" "Waiting" "DONE" "Completed")
     (sequence "Queue" "Working On" "On Hold" "|" "Finished" "Worked On" "Removed")))
+    ;; Set margins in Org mode
+    (add-hook 'org-mode-hook
+          (lambda ()
+            (setq-local left-margin-width 2
+                        right-margin-width 2)
+            (set-window-buffer nil (current-buffer)))) ;; refresh margins
     )
 
 ;;; Custom headings that inherit color form default

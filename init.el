@@ -164,7 +164,10 @@
 
 
 ;;; Font
-(set-face-attribute 'default nil :height 100)
+(if (eq system-type 'gnu/linux)
+    (set-face-attribute 'default nil :height 110)
+(set-face-attribute 'default nil :height 100))
+
 ;(add-to-list 'default-frame-alist '(font . "Iosevka-12" ))
 ;(add-to-list 'default-frame-alist '(font . "Cascadia Mono 12" ))
 ;(set-face-attribute 'default t :font "Cascadia Mono" )

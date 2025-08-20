@@ -312,6 +312,17 @@
             (set-window-buffer nil (current-buffer)))) ;; refresh margins
     )
 
+;; TAB in org-mode oveeriding evil-mode
+(defun my-tab ()
+  "Custom TAB behavior: Org-mode cycles, otherwise evil-jump-forward."
+  (interactive)
+  (if (derived-mode-p 'org-mode)
+      (org-cycle)
+    (evil-jump-forward)))
+
+;; Remap TAB in evil-motion-state-map to our wrapper
+(define-key evil-motion-state-map (kbd "TAB") #'my-tab)
+
 ;;; Custom headings that inherit color form default
 ;; https://htmlcolorcodes.com/color-wheel/
 (custom-set-faces

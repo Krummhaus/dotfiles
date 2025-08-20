@@ -326,11 +326,16 @@
 ;;; Custom headings that inherit color form default
 ;; https://htmlcolorcodes.com/color-wheel/
 (custom-set-faces
- '(org-level-1 ((t (:foreground "#F099FF" :weight bold :height 1.35)))) 
- '(org-level-2 ((t (:foreground "#99A8FF" :weight semi-bold :height 1.2)))) 
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(org-level-1 ((t (:foreground "#F099FF" :weight bold :height 1.35))))
+ '(org-level-2 ((t (:foreground "#99A8FF" :weight semi-bold :height 1.2))))
  '(org-level-3 ((t (:foreground "#A8FF99" :weight semi-bold :height 1.1))))
- '(org-level-4 ((t (:foreground "#DBFF99" :weight semi-bold :height 1.05)))) 
- '(org-level-5 ((t (:foreground "#FFF099" :weight semi-bold :height 1.0))))) 
+ '(org-level-4 ((t (:foreground "#DBFF99" :weight semi-bold :height 1.05))))
+ '(org-level-5 ((t (:foreground "#FFF099" :weight semi-bold :height 1.0)))))
+ 
 
 ;;; Org-Babel
 (org-babel-do-load-languages
@@ -426,3 +431,10 @@
 
 ;; Optional: make Gnus fetch headers efficiently
 (setq gnus-fetch-old-headers t)
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   '(gnuplot-mode gnuplot yasnippet org-roam markdown-mode magit gptel evil company)))

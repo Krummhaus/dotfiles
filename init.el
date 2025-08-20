@@ -32,7 +32,8 @@
 ;; Turn-off sounds
 (setq visible-bell t)
 
-
+;; Return to recent edit file
+(recentf-mode 1)
 
 ;;; Colouring 'man' pages =====
 ;;  Add the follows to your init file and use M-x man or the man command in
@@ -112,16 +113,21 @@
 (evil-set-initial-state 'magit-mode 'emacs)
 
 ;;;  === Custom key bindings ====
-(global-set-key (kbd "<C-tab>") 'other-window)
 (global-set-key (kbd "C-,") 'dupl-line)
 (global-set-key (kbd "C-5") 'compile)
 (global-set-key (kbd "C-0") 'shell-command)
 
+;; Molly Rocket style
+(global-set-key (kbd "M-b") 'ido-switch-buffer)
+(global-set-key (kbd "M-B") 'ido-switch-buffer-other-window)
 (global-set-key (kbd "M-f") 'ido-find-file)
-;; "M-x" remap to "Shift + Space"
+(global-set-key (kbd "M-F") 'ido-find-file-other-window)
+(global-set-key (kbd "M-s") 'save-buffer)
+(global-set-key (kbd "M-w") 'other-window)
+(global-set-key (kbd "M-k") 'kill-buffer)
 ;(global-set-key (kbd "S-SPC") 'execute-extended-command)
-;; Shift + Insert to Control + Space ..paste from sys clipboard
-(global-set-key (kbd "C-SPC") #'yank)
+(global-set-key (kbd "S-SPC") #'yank)
+
 
 ;; for clang-format
 (defun insert-clang-format-off ()

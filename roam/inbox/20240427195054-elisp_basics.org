@@ -4,7 +4,8 @@
 #+title: elisp-basics
 
 * Basic syntax
-- Function call
+Based on YTB [[https://www.youtube.com/watch?v=1y__2IK-aLM][Learn Emacs Lisp in 30 Minutes"]] 
+** Functions
 #+begin_src elisp
 (defun add-func (num)
   ( + num 1))
@@ -20,9 +21,39 @@
   (+ num 1))
 
 (funcall 'add-one 3)
-
 #+end_src
 
 #+RESULTS:
 : 4
+
+** Basic types
+Evaluate with ~C-x C-e~
+- numbers  :: 1
+- strings  :: "hello"
+- symbols  :: 'hello
+- keywords :: :hello
+- chars    :: ?h
+- false    :: nil
+- pairs    :: (cons cell) :: (cons 1 2)
+- lists    :: (list 1 2 3)
+
+#+begin_src elisp :results value verbatim
+; ~'~ tells Emacs not evaluate folowing expresinon
+'(+ 1 5)
+)
+#+end_src
+
+#+RESULTS:
+: (+ 1 5)
+
+*** Quasi qoute
+Backtick `
+Note we use ==`== as quasinote rather than ='= and =,= to unquote
+#+begin_src elisp :results value verbatim
+; (setq org-hide-emphasis-markers t)
+`(1 2, (+ 1 2))
+#+end_src
+
+#+RESULTS:
+: (1 2 3)
 

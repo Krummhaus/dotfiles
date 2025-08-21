@@ -125,8 +125,9 @@
 (global-set-key (kbd "M-s") 'save-buffer)
 (global-set-key (kbd "M-w") 'other-window)
 (global-set-key (kbd "M-k") 'kill-buffer)
-;(global-set-key (kbd "S-SPC") 'execute-extended-command)
-(global-set-key (kbd "S-SPC") #'yank)
+(global-set-key (kbd "C-S-c") 'kill-ring-save) ;; Copy
+(global-set-key (kbd "C-S-v") 'yank)           ;; Paste
+
 
 
 ;; for clang-format
@@ -161,6 +162,7 @@
 (add-to-list 'process-coding-system-alist '(".*" . (utf-8 . utf-8)))
 (setenv "LANG" "en_US.UTF-8")
 (setenv "LC_ALL" "en_US.UTF-8")
+(setenv "PYTHONIOENCODING" "utf-8")
 
 
 ;;; Font

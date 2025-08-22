@@ -328,6 +328,10 @@
 ;; Remap TAB in evil-motion-state-map to our wrapper
 (define-key evil-motion-state-map (kbd "TAB") #'my-tab)
 
+;; Org Tags
+(custom-set-faces
+ '(org-tag ((t (:inherit shadow :weight normal :slant italic)))))
+
 ;;; Custom headings that inherit color form default
 ;; https://htmlcolorcodes.com/color-wheel/
 (custom-set-faces

@@ -1,0 +1,17 @@
+:PROPERTIES:
+:ID:       c2f08640-404a-49eb-a6ab-18f1ed620bdd
+:header-args: :python /home/krumm/python-venv/np-pd-venv/.venv/bin/python 
+:END:
+#+title: linear-algebra
+
+
+* Udemy course
+ by Mike X Cohen
+
+** Vectors
+#+begin_src python :results output
+import numpy as np
+print("we got np")
+#+end_src
+
+#+RESULTS:

@@ -114,7 +114,7 @@
 
 ;;;  === Custom key bindings ====
 (global-set-key (kbd "C-,") 'dupl-line)
-(global-set-key (kbd "C-5") 'compile)
+(global-set-key (kbd "M-5") 'compile)
 (global-set-key (kbd "C-0") 'shell-command)
 
 ;; Molly Rocket style
@@ -128,7 +128,10 @@
 (global-set-key (kbd "C-S-c") 'kill-ring-save) ;; Copy
 (global-set-key (kbd "C-S-v") 'yank)           ;; Paste
 
-
+;;; ===== prog languages =====
+;;; c-mode
+(setq c-default-style "stroustrup"
+          c-basic-offset 4)
 
 ;; for clang-format
 (defun insert-clang-format-off ()

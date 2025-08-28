@@ -1,0 +1,9 @@
+:PROPERTIES:
+:ID:       1841cf23-1e62-4034-a531-a20d6789b371
+:END:
+#+title: emacs-moves
+
+
+Use =isearch= allfor quick navigation.
+
+Help about key-binding =C-h k C-s= to get /awesome/ help

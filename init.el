@@ -113,18 +113,8 @@
 (evil-set-initial-state 'magit-mode 'emacs)
 
 ;;;  === Custom key bindings ====
-(global-set-key (kbd "C-,") 'dupl-line)
-(global-set-key (kbd "M-5") 'compile)
-(global-set-key (kbd "C-0") 'shell-command)
-
-;; Molly Rocket style
-(global-set-key (kbd "M-b") 'ido-switch-buffer)
-(global-set-key (kbd "M-B") 'ido-switch-buffer-other-window)
-(global-set-key (kbd "M-f") 'ido-find-file)
-(global-set-key (kbd "M-F") 'ido-find-file-other-window)
-(global-set-key (kbd "M-s") 'save-buffer)
-(global-set-key (kbd "M-w") 'other-window)
-(global-set-key (kbd "M-k") 'kill-buffer)
+;(global-set-key (kbd "C-,") 'dupl-line)
+(global-set-key (kbd "C-<return>") 'compile)
 (global-set-key (kbd "C-S-c") 'kill-ring-save) ;; Copy
 (global-set-key (kbd "C-S-v") 'yank)           ;; Paste
 

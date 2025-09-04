@@ -445,7 +445,9 @@
   :config
   (which-key-mode))
 
-
+;;; Request package to API calls
+(use-package request
+  :ensure t)
 
 ;; Optional: make Gnus fetch headers efficiently
 (setq gnus-fetch-old-headers t)

@@ -1,0 +1,19 @@
+:PROPERTIES:
+:ID:       c45b16d6-8174-4851-945e-1fdf3a3eec6a
+:END:
+#+title: cpp-io
+
+Ways to read file in CPP
+
+
+#+begin_src cpp
+void readConfig(const std::string& filename) {
+    std::ifstream fin(filename);
+    std::string temp;
+
+    // while there is a TOKEN, print it
+    while (fin >> temp) {
+	std::cout << temp << "\n";
+    }
+}
+#+end_src

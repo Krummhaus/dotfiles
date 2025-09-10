@@ -352,7 +352,7 @@
 (org-babel-do-load-languages
  'org-babel-load-languages
  '((C . t)        ; Enable C
-   (cpp . nil)    ; Disable C++
+   (cpp . t)    ; Disable C++
    (python . t)   ; Enable Python
    (sql . t)      ; Enable SQL
    ;; Add other languages as needed

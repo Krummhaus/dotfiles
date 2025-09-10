@@ -352,11 +352,22 @@
 (org-babel-do-load-languages
  'org-babel-load-languages
  '((C . t)        ; Enable C
-   (cpp . t)    ; Disable C++
+   ;(cpp . t)    ; Disable C++
    (python . t)   ; Enable Python
    (sql . t)      ; Enable SQL
    ;; Add other languages as needed
    ))
+
+(require 'org-tempo) ; Make sure org-tempo is loaded
+
+(add-to-list 'org-structure-template-alist
+             '("py" . "src python")) ; Shortcut: <py TAB -> #+BEGIN_SRC python ... #+END_SRC
+
+(add-to-list 'org-structure-template-alist
+             '("c" . "src C"))       ; Shortcut: <c TAB -> #+BEGIN_SRC C ... #+END_SRC
+
+(add-to-list 'org-structure-template-alist
+             '("sql" . "src sql"))   ; Shortcut: <sql TAB -> #+BEGIN_SRC sql ... #+END_SRC
 
 ;;; Babel-Python for Linux
 (when (eq system-type 'gnu/linux)

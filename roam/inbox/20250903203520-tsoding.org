@@ -1,0 +1,38 @@
+:PROPERTIES:
+:ID:       15ef6c48-d73f-4e54-ae9d-e1d38e7d590b
+:END:
+#+title: tsoding
+* Page dedicated to youtube chnn Tsoding Daily
+- [[https://www.youtube.com/@TsodingDaily][Tsodig Daily]]
+  Expected output is some Emacd and C tricks extracted from episodes/streams.
+
+** The Best Coding Interview Question Ever
+  Resources:
+    - https://www.youtube.com/watch?v=ey68sKSFJAU&t=2900s
+    - https://quuxplusone.github.io/blog/2022/01/06/memcached-interview/
+    - https://memcached.org/about
+
+:Dired:
+ Working with dired =C-c f= then =//= to root than navigate to foldet nad =C-d= will opent dired buffer at project location.
+ Then =M-!= to invoke shell-command and download with ~curl -O https://memcached.org/files/memcached-1.4.15.tar.gz~
+ And .gz.tar archive is at right place then run =!= on marked =m= file to untar.
+
+:Bash:
+#+begin_src bash
+# cloc is command line utility to count lines of code
+sudo apt install cloc
+cloc .
+
+# first simple './configure' was with errors so ...
+./configure CFLAGS="-Wno-deprecated-declarations"
+make -j3
+./memcached
+
+
+#+end_src
+
+- Github label "good first issue" 
+
+
+:End:
+16:49

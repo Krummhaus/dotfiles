@@ -24,7 +24,7 @@
 ;; Warning levels
 (setq warning-minimum-level :error)
 ;;; Brackets
-;(electric-pair-mode 1)
+(electric-pair-mode 1)
 ;; wrapp lines
 (global-visual-line-mode 1)  ; Enable visual-line-mode globally
 (setq-default word-wrap t)    ; Enable word wrapping
@@ -445,7 +445,9 @@
   :config
   (which-key-mode))
 
-
+;;; Request package to API calls
+(use-package request
+  :ensure t)
 
 ;; Optional: make Gnus fetch headers efficiently
 (setq gnus-fetch-old-headers t)

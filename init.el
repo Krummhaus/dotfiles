@@ -460,6 +460,30 @@
 (use-package request
   :ensure t)
 
+;;; RFC specification
+(use-package rfc-mode
+  :ensure t
+  :config
+  ;; Different paths per OS
+  (setq rfc-mode-directory
+        (cond
+         ((eq system-type 'windows-nt) "c:/rfc_emacs")
+         ((eq system-type 'gnu/linux) "/home/krumm/rfc_emacs")
+         ((eq system-type 'darwin) "/Users/krumm/rfc_emacs")))
+
+  ;; Optional: always fetch newer RFCs if available
+  (setq rfc-mode-update-files t)
+
+;; Download and use the official index
+  (setq rfc-mode-index-update t)   ;; refresh index if stale
+  (setq rfc-mode-index-filename
+        (expand-file-name "rfc-index.txt" rfc-mode-directory))
+
+  ;; Optional: keybindings
+  :bind
+  (("C-c r n" . rfc-mode)          ;; open by number
+   ("C-c r s" . rfc-mode-browse))) ;; search by title/abstract  ;; Optional: shortcut keybinding
+
 ;; Optional: make Gnus fetch headers efficiently
 (setq gnus-fetch-old-headers t)
 (custom-set-variables
@@ -468,4 +492,4 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(go-mode which-key gnuplot-mode gnuplot yasnippet org-roam markdown-mode magit gptel evil company)))
+   '(rfc-mode go-mode which-key gnuplot-mode gnuplot yasnippet org-roam markdown-mode magit gptel evil company)))

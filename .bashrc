@@ -139,3 +139,7 @@ keg() { newdir=~/keg/$(date +%Y-%m-%d-%H%M%S)
 	touch $newdir/README.md
 	vim $newdir/README.md
 }
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

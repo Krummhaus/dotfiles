@@ -355,6 +355,7 @@
    ;(cpp . t)    ; Disable C++
    (python . t)   ; Enable Python
    (sql . t)      ; Enable SQL
+   (js . t)      ; Enable JS
    ;; Add other languages as needed
    ))
 

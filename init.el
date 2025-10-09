@@ -25,6 +25,15 @@
 (setq warning-minimum-level :error)
 ;;; Brackets
 (electric-pair-mode 1)
+(defun my/org-electric-pair-inhibit (char)
+  (or (and (eq major-mode 'org-mode)
+           (char-equal char ?<))
+      (electric-pair-default-inhibit char)))
+
+(add-hook 'org-mode-hook
+          (lambda ()
+            (setq-local electric-pair-inhibit-predicate
+                        #'my/org-electric-pair-inhibit)))
 ;; wrapp lines
 (global-visual-line-mode 1)  ; Enable visual-line-mode globally
 (setq-default word-wrap t)    ; Enable word wrapping
@@ -142,6 +151,12 @@
 
 (add-to-list 'auto-mode-alist '("\\.go\\'" . go-mode))
 
+(add-hook 'go-mode-hook
+          (lambda ()
+            (setq tab-width 4)           ;; tabs display as 4 spaces
+            (setq indent-tabs-mode t)    ;; use real tabs, not spaces
+            (add-hook 'before-save-hook 'gofmt-before-save nil 'local))) ;; format on save
+
 ;;;  =============================
 
 ;;; UTF-8 Everywhere
@@ -211,6 +226,16 @@
   (setq ido-everywhere t)
   (setq ido-enable-flex-matching t)
   (setq ido-all-frames nil)
+  ;; Prevent ido from searching outside the current directory
+  (setq ido-auto-merge-work-directories-length -1)
+
+  ;; Don't guess filenames from elsewhere
+  (setq ido-use-filename-at-point nil)
+
+  ;; Limit ido to current dir and subdirs only
+  (setq ido-case-fold t)
+  (setq ido-enable-prefix nil)
+  (setq ido-enable-regexp nil)
   )
 
 ;;; --- Company ---
@@ -364,7 +389,7 @@
              '("py" . "src python")) ; Shortcut: <py TAB -> #+BEGIN_SRC python ... #+END_SRC
 
 (add-to-list 'org-structure-template-alist
-             '("c" . "src C"))       ; Shortcut: <c TAB -> #+BEGIN_SRC C ... #+END_SRC
+             '("cc" . "src C"))       ; Shortcut: <cc TAB -> #+BEGIN_SRC C ... #+END_SRC
 
 (add-to-list 'org-structure-template-alist
              '("sql" . "src sql"))   ; Shortcut: <sql TAB -> #+BEGIN_SRC sql ... #+END_SRC

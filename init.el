@@ -142,6 +142,15 @@
 
 (add-to-list 'auto-mode-alist '("\\.go\\'" . go-mode))
 
+(setq gofmt-command "goimports")  ;; use goimports instead of gofmt
+
+(add-hook 'go-mode-hook
+          (lambda ()
+            (setq tab-width 4)
+            (setq indent-tabs-mode t)
+            (add-hook 'before-save-hook 'gofmt-before-save nil 'local)))
+
+
 ;;;  =============================
 
 ;;; UTF-8 Everywhere

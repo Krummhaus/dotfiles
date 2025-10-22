@@ -151,11 +151,22 @@
 
 (add-to-list 'auto-mode-alist '("\\.go\\'" . go-mode))
 
+<<<<<<< HEAD
 (add-hook 'go-mode-hook
           (lambda ()
             (setq tab-width 4)           ;; tabs display as 4 spaces
             (setq indent-tabs-mode t)    ;; use real tabs, not spaces
             (add-hook 'before-save-hook 'gofmt-before-save nil 'local))) ;; format on save
+=======
+(setq gofmt-command "goimports")  ;; use goimports instead of gofmt
+
+(add-hook 'go-mode-hook
+          (lambda ()
+            (setq tab-width 4)
+            (setq indent-tabs-mode t)
+            (add-hook 'before-save-hook 'gofmt-before-save nil 'local)))
+
+>>>>>>> 9341fa27fc907073c1ba99af92d3d105b793dee2
 
 ;;;  =============================
 
@@ -380,6 +391,7 @@
    ;(cpp . t)    ; Disable C++
    (python . t)   ; Enable Python
    (sql . t)      ; Enable SQL
+   (js . t)      ; Enable JS
    ;; Add other languages as needed
    ))
 
@@ -485,6 +497,30 @@
 (use-package request
   :ensure t)
 
+;;; RFC specification
+(use-package rfc-mode
+  :ensure t
+  :config
+  ;; Different paths per OS
+  (setq rfc-mode-directory
+        (cond
+         ((eq system-type 'windows-nt) "c:/rfc_emacs")
+         ((eq system-type 'gnu/linux) "/home/krumm/rfc_emacs")
+         ((eq system-type 'darwin) "/Users/krumm/rfc_emacs")))
+
+  ;; Optional: always fetch newer RFCs if available
+  (setq rfc-mode-update-files t)
+
+;; Download and use the official index
+  (setq rfc-mode-index-update t)   ;; refresh index if stale
+  (setq rfc-mode-index-filename
+        (expand-file-name "rfc-index.txt" rfc-mode-directory))
+
+  ;; Optional: keybindings
+  :bind
+  (("C-c r n" . rfc-mode)          ;; open by number
+   ("C-c r s" . rfc-mode-browse))) ;; search by title/abstract  ;; Optional: shortcut keybinding
+
 ;; Optional: make Gnus fetch headers efficiently
 (setq gnus-fetch-old-headers t)
 (custom-set-variables
@@ -493,4 +529,4 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(go-mode which-key gnuplot-mode gnuplot yasnippet org-roam markdown-mode magit gptel evil company)))
+   '(rfc-mode go-mode which-key gnuplot-mode gnuplot yasnippet org-roam markdown-mode magit gptel evil company)))

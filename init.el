@@ -151,7 +151,6 @@
 
 (add-to-list 'auto-mode-alist '("\\.go\\'" . go-mode))
 
-<<<<<<< HEAD
 (add-hook 'go-mode-hook
           (lambda ()
             (setq tab-width 4)           ;; tabs display as 4 spaces
@@ -165,8 +164,6 @@
             (setq tab-width 4)
             (setq indent-tabs-mode t)
             (add-hook 'before-save-hook 'gofmt-before-save nil 'local)))
-
->>>>>>> 9341fa27fc907073c1ba99af92d3d105b793dee2
 
 ;;;  =============================
 

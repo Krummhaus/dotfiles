@@ -156,7 +156,7 @@
             (setq tab-width 4)           ;; tabs display as 4 spaces
             (setq indent-tabs-mode t)    ;; use real tabs, not spaces
             (add-hook 'before-save-hook 'gofmt-before-save nil 'local))) ;; format on save
-=======
+
 (setq gofmt-command "goimports")  ;; use goimports instead of gofmt
 
 (add-hook 'go-mode-hook

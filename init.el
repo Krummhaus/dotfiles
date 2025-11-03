@@ -124,8 +124,8 @@
 ;;;  === Custom key bindings ====
 ;(global-set-key (kbd "C-,") 'dupl-line)
 (global-set-key (kbd "C-<return>") 'compile)
-(global-set-key (kbd "C-S-c") 'kill-ring-save) ;; Copy
-(global-set-key (kbd "C-S-v") 'yank)           ;; Paste
+(global-set-key (kbd "C-S-c") 'clipboard-kill-ring-save) ;; Copy
+(global-set-key (kbd "C-S-v") 'clipboard-yank)           ;; Paste
 
 ;;; ===== prog languages =====
 ;;; c-mode
@@ -156,7 +156,7 @@
             (setq tab-width 4)           ;; tabs display as 4 spaces
             (setq indent-tabs-mode t)    ;; use real tabs, not spaces
             (add-hook 'before-save-hook 'gofmt-before-save nil 'local))) ;; format on save
-=======
+
 (setq gofmt-command "goimports")  ;; use goimports instead of gofmt
 
 (add-hook 'go-mode-hook
@@ -223,9 +223,9 @@
 ;(use-package magit
   ;:ensure t)
 ;; Because Magit on Windows is pain so install only on Linux
-(use-package magit
-  :if (not (eq system-type 'windows-nt))
-  :ensure t)
+;(use-package magit
+  ;:if (not (eq system-type 'windows-nt))
+  ;:ensure t)
 
 ;;; Ido Mode
 (use-package ido

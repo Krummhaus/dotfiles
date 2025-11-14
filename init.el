@@ -85,6 +85,8 @@
 ;;; Theme
 (load-theme 'deeper-blue t)
 
+
+
 ;;; Evil Mode
 (use-package evil
   :ensure t
@@ -128,44 +130,19 @@
 (global-set-key (kbd "C-S-v") 'clipboard-yank)           ;; Paste
 
 ;;; ===== prog languages =====
-;;; c-mode
+;;; c-mode c++-mode
 (setq c-default-style "stroustrup"
-          c-basic-offset 4)
+      c-basic-offset 4)
 
-;; for clang-format
-(defun insert-clang-format-off ()
-  "Inserts '// clang-format off' at the point."
-  (interactive)
-  (insert "// clang-format off"))
+(defun my-cpp-semicolon-handler ()
+  "If user types ';;', insert a semicolon at end of line."
+  (when (and (eq major-mode '(c-mode c++-mode))
+             (looking-back ";;" 2))
+    (delete-char -2)
+    (end-of-line)
+    (insert ";")))
 
-(defun insert-clang-format-on ()
-  "Inserts '// clang-format on' at the point."
-  (interactive)
-  (insert "// clang-format on"))
-(global-set-key (kbd "C-c f") 'insert-clang-format-off)
-(global-set-key (kbd "C-c o") 'insert-clang-format-on)
-
-;;; Golang
-(unless (package-installed-p 'go-mode)
-  (package-install 'go-mode))
-
-(add-to-list 'auto-mode-alist '("\\.go\\'" . go-mode))
-
-(add-hook 'go-mode-hook
-          (lambda ()
-            (setq tab-width 4)           ;; tabs display as 4 spaces
-            (setq indent-tabs-mode t)    ;; use real tabs, not spaces
-            (add-hook 'before-save-hook 'gofmt-before-save nil 'local))) ;; format on save
-
-(setq gofmt-command "goimports")  ;; use goimports instead of gofmt
-
-(add-hook 'go-mode-hook
-          (lambda ()
-            (setq tab-width 4)
-            (setq indent-tabs-mode t)
-            (add-hook 'before-save-hook 'gofmt-before-save nil 'local)))
-
-;;;  =============================
+(add-hook 'post-self-insert-hook #'my-cpp-semicolon-handler)
 
 ;;; UTF-8 Everywhere
 (set-language-environment "UTF-8")
@@ -189,7 +166,7 @@
 ;;; Font
 (if (eq system-type 'gnu/linux)
     (set-face-attribute 'default nil :height 110)
-(set-face-attribute 'default nil :height 100))
+(set-face-attribute 'default nil :height 110))
 
 ;(add-to-list 'default-frame-alist '(font . "Iosevka-12" ))
 ;(add-to-list 'default-frame-alist '(font . "Cascadia Mono 12" ))
@@ -197,8 +174,8 @@
 ;(add-to-list 'default-frame-alist '(font . "Liberation Mono 10" ))
 ;(set-face-attribute 'default t :font "Liberation Mono" )
 ;(set-face-attribute 'default nil :font "0xProto Nerd Mono 10" )
-(when (eq system-type 'windows-nt)
-  (set-face-attribute 'default nil :font "Cascadia Code"))
+;(when (eq system-type 'windows-nt)
+  ;(set-face-attribute 'default nil :font "Cascadia Code"))
 
 ;;; Markdown
 ;; Dont show markup tags (M-x markdown-toggle-markup-hiding)
@@ -219,15 +196,7 @@
    '(markdown-header-face-2 ((t (:inherit markdown-header-face :height 1.4))))
    '(markdown-header-face-3 ((t (:inherit markdown-header-face :height 1.2))))))
 
-;;; Magit
-;(use-package magit
-  ;:ensure t)
-;; Because Magit on Windows is pain so install only on Linux
-;(use-package magit
-  ;:if (not (eq system-type 'windows-nt))
-  ;:ensure t)
-
-;;; Ido Mode
+;;;;; Ido Mode
 (use-package ido
   :config
   (ido-mode t)
@@ -299,7 +268,7 @@
   ;;:ensure t)
 
 
-;; Define the duplicate-line function
+;;; Define the duplicate-line function
 (defun dupl-line ()
   "Duplicate the current line."
   (interactive)
@@ -307,21 +276,6 @@
     (end-of-line)
     (newline)
     (insert text)))
-
-;;; Clang Format
-;; Load clang-format
-;(require 'clang-format)
-(if (not (eq system-type 'windows-nt))
-    (require 'clang-format))
-
-;; Function to run clang-format on save
-(defun clang-format-on-save ()
-  "Format the current buffer with clang-format on save."
-  (when (derived-mode-p 'c-mode 'c++-mode 'java-mode 'objc-mode 'proto-mode)
-    (clang-format-buffer)))
-
-;; Add the hook to the before-save-hook
-(add-hook 'before-save-hook 'clang-format-on-save)
 
 ;;; Org-Mode
 (use-package org
@@ -369,11 +323,11 @@
  '(markdown-header-face-1 ((t (:inherit markdown-header-face :height 1.7))))
  '(markdown-header-face-2 ((t (:inherit markdown-header-face :height 1.4))))
  '(markdown-header-face-3 ((t (:inherit markdown-header-face :height 1.2))))
- '(org-level-1 ((t (:foreground "#F099FF" :weight bold :height 1.35))))
- '(org-level-2 ((t (:foreground "#99A8FF" :weight semi-bold :height 1.2))))
- '(org-level-3 ((t (:foreground "#A8FF99" :weight semi-bold :height 1.1))))
- '(org-level-4 ((t (:foreground "#DBFF99" :weight semi-bold :height 1.05))))
- '(org-level-5 ((t (:foreground "#FFF099" :weight semi-bold :height 1.0))))
+ '(org-level-1 ((t (:foreground "#FFA600" :weight bold :height 1.35))))
+ '(org-level-2 ((t (:foreground "#FF6361" :weight semi-bold :height 1.2))))
+ '(org-level-3 ((t (:foreground "#BC5090" :weight semi-bold :height 1.1))))
+ '(org-level-4 ((t (:foreground "#58508D" :weight semi-bold :height 1.05))))
+ '(org-level-5 ((t (:foreground "#003F5C" :weight semi-bold :height 1.0))))
  '(org-tag ((t (:inherit shadow :weight normal :slant italic)))))
 
 ;;; Custom headings that inherit color form default
@@ -434,57 +388,7 @@
 						  '(:immediate-finish t)))))
     (apply #'org-roam-node-insert args)))
 
-;;; Install GPTEL if not installed
-(unless (package-installed-p 'gptel)
-  (package-install 'gptel))
-(require 'gptel)
-;; Set your OpenAI API key here (or via environment variable)
-;; Load secrets.el
-(when (file-exists-p "~/.emacs.d/secrets.el")
-  (load "~/.emacs.d/secrets.el"))
-;; Assign the key to GPTEL
-(setq gptel-api-key openai-api-key)
-;; Set default model to GPT-4 Mini
-(setq gptel-default-model "gpt-4o-mini")
-;; Optional: convenient keybinding to launch GPTEL
-(global-set-key (kbd "C-c g") 'gptel)
-;; Configure gptel to use org-mode syntax
-(setq gptel-org-mode t)
-;; Load gptel
-;(add-hook 'org-mode-hook (lambda () (gptel-mode 1)))
-;; Optional: auto-start GPTEL buffer in comint mode
-;(add-hook 'gptel-mode-hook
-          ;(lambda ()
-            ;(setq-local comint-prompt-read-only t)))
-
-;; Gptel prompts
-(gptel-make-preset 'gpt4coding                       ;preset name, a symbol
-  :description "A preset optimized for coding tasks" ;for your reference
-  :backend "ChatGPT"                     ;gptel backend or backend name
-  :model 'gpt-4o-mini
-  :system "You are an expert coding assistant. Your role is to provide high-quality code solutions, refactorings, and explanations."
-  :tools '("read_buffer" "modify_buffer")) ;gptel tools or tool names
-
-
-;;; Email client GNUS
-(setq gnus-select-m(setq gnus-select-method
-      '(nnimap "tkpgeo"
-               (nnimap-address "budejovice.tkpgeo.cz")
-               (nnimap-server-port 993)
-               (nnimap-stream ssl)
-               (nnimap-user "kalina")))
-      )
-;; Sort threads by date (most recent first)
-(setq gnus-thread-sort-functions
-      '((not gnus-thread-sort-by-date)))
-
-;; Sort articles by date
-(setq gnus-thread-sort-functions 'gnus-thread-sort-by-date)
-
-;; Optional: show newest articles at the top in summary buffer
-(setq gnus-article-sort-functions
-      '(gnus-article-sort-by-date))
-
+;;; Which-key
 (use-package which-key
   :ensure t
   :config
@@ -517,13 +421,3 @@
   :bind
   (("C-c r n" . rfc-mode)          ;; open by number
    ("C-c r s" . rfc-mode-browse))) ;; search by title/abstract  ;; Optional: shortcut keybinding
-
-;; Optional: make Gnus fetch headers efficiently
-(setq gnus-fetch-old-headers t)
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   '(rfc-mode go-mode which-key gnuplot-mode gnuplot yasnippet org-roam markdown-mode magit gptel evil company)))

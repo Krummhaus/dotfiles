@@ -435,4 +435,19 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(company evil magit markdown-mode org-roam request rfc-mode yasnippet)))
+   '(company evil magit markdown-mode org-roam projectile request
+	     rfc-mode yasnippet)))
+
+;;; Projectile
+(use-package projectile
+  :ensure t
+  :init
+  (setq projectile-project-search-path '("~/projects/" "~/work/" "~/playground"))
+  :config
+  (projectile-mode +1)
+  
+  ;; Bind to a leader key for Evil users (Example: Space then 'p')
+  ;; This makes it feel like a "Project" menu
+  (with-eval-after-load 'evil
+    (define-key evil-normal-state-map (kbd "SPC p") 'projectile-command-map)))
+

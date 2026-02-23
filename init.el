@@ -75,6 +75,9 @@
                          ("gnu" . "https://elpa.gnu.org/packages/")))
 (package-initialize)
 
+(unless package-archive-contents
+  (package-refresh-contents))
+
 ;;; Use Package
 (unless (package-installed-p 'use-package)
  (package-refresh-contents)
@@ -421,3 +424,15 @@
   :bind
   (("C-c r n" . rfc-mode)          ;; open by number
    ("C-c r s" . rfc-mode-browse))) ;; search by title/abstract  ;; Optional: shortcut keybinding
+
+(use-package magit
+  :if (eq system-type 'gnu/linux)
+  :ensure t
+  :bind ("C-c g" . magit-status))
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   '(company evil magit markdown-mode org-roam request rfc-mode yasnippet)))

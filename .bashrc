@@ -93,24 +93,6 @@ fi
 # colored GCC warnings and errors
 #export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
-# Alias function to ssh-add different keys
-ad() {
-	ssh-add ~/.ssh/"$1"
-}
-
-# Add an "alert" alias for long running commands.  Use like so:
-#   sleep 10; alert
-alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
-
-# Alias definitions.
-# You may want to put all your additions into a separate file like
-# ~/.bash_aliases, instead of adding them here directly.
-# See /usr/share/doc/bash-doc/examples in the bash-doc package.
-
-if [ -f ~/.bash_aliases ]; then
-    . ~/.bash_aliases
-fi
-
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
 # sources /etc/bash.bashrc).
@@ -126,13 +108,27 @@ fi
 # export ORACLE_HOME=/opt/oracle/instantclient_12_2
 # export LD_LIBRARY_PATH=$ORACLE_HOME:$LD_LIBRARY_PATH
 # export PATH=$ORACLE_HOME:$PATH
-export EDITOR=vim
-export PATH=$PATH:/snap/intellij-idea-community/560/plugins/Kotlin/kotlinc/bin
-export PATH=$PATH:/opt/jdk-11/bin
+# export EDITOR=vim
+# export PATH=$PATH:/snap/intellij-idea-community/560/plugins/Kotlin/kotlinc/bin
+# export PATH=$PATH:/opt/jdk-11/bin
 
 
-# Custom function `dat`
-duit(){ w3m https://lite.duckduckgo.com/html/?q="$*"; }
+# Aliases
+# Add an "alert" alias for long running commands.  Use like so:
+#   sleep 10; alert
+alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+alias ee='emacs -nw'
+
+# Alias definitions.
+# You may want to put all your additions into a separate file like
+# ~/.bash_aliases, instead of adding them here directly.
+# See /usr/share/doc/bash-doc/examples in the bash-doc package.
+
+if [ -f ~/.bash_aliases ]; then
+    . ~/.bash_aliases
+fi
+# Custom functions
+w() { w3m "https://duckduckgo.com/lite/?q=$*"; }
 
 keg() { newdir=~/keg/$(date +%Y-%m-%d-%H%M%S) 
 	mkdir $newdir
@@ -140,7 +136,20 @@ keg() { newdir=~/keg/$(date +%Y-%m-%d-%H%M%S)
 	vim $newdir/README.md
 }
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-export PATH=$PATH:/usr/local/go/bin
+# --- SSH AGENT SETUP ---
+if ! pgrep -u "$USER" ssh-agent > /dev/null; then
+    ssh-agent > ~/.ssh-agent-info
+fi
+if [ -f ~/.ssh-agent-info ]; then
+    source ~/.ssh-agent-info > /dev/null
+fi
+
+# --- THE SMART 'AD' COMMAND ---
+ad() {
+    if [ -z "$1" ]; then
+        ls -1 ~/.ssh/id_* 2>/dev/null | xargs -n 1 basename
+    else
+        ssh-add ~/.ssh/"$1"
+    fi
+}
+

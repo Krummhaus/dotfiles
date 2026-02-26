@@ -117,7 +117,11 @@ fi
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+
+# 1. Define the shortcut
 alias ee='emacs -nw'
+# 2. Tell Bash how to autocomplete files for 'ee'
+complete -F _minimal ee 2>/dev/null || complete -f ee
 
 # Alias definitions.
 # You may want to put all your additions into a separate file like

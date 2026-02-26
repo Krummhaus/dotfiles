@@ -131,8 +131,9 @@
 (global-set-key (kbd "C-<return>") 'compile)
 (global-set-key (kbd "C-S-c") 'clipboard-kill-ring-save) ;; Copy
 (global-set-key (kbd "C-S-v") 'clipboard-yank)           ;; Paste
+(global-set-key (kbd "M-o") 'other-window)           ;; Tab windows
 
-;;; ===== prog languages =====
+;; ===== prog languages =====
 ;;; c-mode c++-mode
 (setq c-default-style "stroustrup"
       c-basic-offset 4)

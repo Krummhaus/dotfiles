@@ -1,0 +1,21 @@
+[window]
+# For your agentic workflow, you might want slight transparency
+opacity = 0.95
+
+[font]
+size = 12
+
+[font.normal]
+family = "Iosevka"
+style = "Light"
+
+[font.bold]
+family = "Iosevka"
+style = "Bold"
+
+[font.italic]
+family = "Iosevka"
+style = "Light Italic"
+
+[terminal]
+osc52 = "CopyPaste"

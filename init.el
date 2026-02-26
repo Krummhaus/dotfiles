@@ -6,11 +6,32 @@
 		       (emacs-init-time "%.2f")
 		       gcs-done)))
 
+;; Enable clipboard integration
+(setq select-enable-clipboard t)
+(setq select-enable-primary t)
+
+;; Use xclip to copy/paste in terminal Emacs
+(when (not (display-graphic-p))
+  (setq interprogram-cut-function
+        (lambda (text &optional push)
+          (let ((process-connection-type nil))
+            (let ((proc (start-process "xclip" nil "xclip" "-selection" "clipboard")))
+              (process-send-string proc text)
+              (process-send-eof proc)))))
+  (setq interprogram-paste-function
+        (lambda ()
+          (let ((xclip-output (shell-command-to-string "xclip -o -selection clipboard")))
+            (unless (string= xclip-output "")
+              xclip-output)))))
+
 ;; Startup Screen
 (setq inhibit-splash-screen t)
 (setq inhibit-startup-message t)
 ;; Get bars
 ;(menu-bar-mode -1)       ; Disable the menu bar
+;; Disable menu bar only in terminal/non-window mode
+(unless (display-graphic-p)
+  (menu-bar-mode -1))
 (tool-bar-mode -1)       ; Disable the tool bar
 (scroll-bar-mode -1)     ; Disable the scroll bar
 (setq scroll-bar-mode -1)
@@ -139,13 +160,17 @@
       c-basic-offset 4)
 
 (defun my-cpp-semicolon-handler ()
-  "If user types ';;', insert a semicolon at end of line."
-  (when (and (eq major-mode '(c-mode c++-mode))
+  "If user types ';;', insert a semicolon at end of line and start new line."
+  (when (and (bound-and-true-p evil-mode)
+             (eq evil-state 'insert)
+             (memq major-mode '(c-mode c++-mode))
              (looking-back ";;" 2))
     (delete-char -2)
-    (end-of-line)
-    (insert ";")))
+    (move-end-of-line 1)
+    (insert ";")
+    (newline-and-indent)))
 
+;; This adds the listener to Emacs
 (add-hook 'post-self-insert-hook #'my-cpp-semicolon-handler)
 
 ;;; UTF-8 Everywhere

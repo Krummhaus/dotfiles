@@ -8,21 +8,30 @@
 
 ;; Enable clipboard integration
 (setq select-enable-clipboard t)
-(setq select-enable-primary t)
+(setq evil-select-enable-clipboard t)
 
-;; Use xclip to copy/paste in terminal Emacs
-(when (not (display-graphic-p))
+(cond
+ ;; CASE 1: WSL (Windows Subsystem for Linux)
+ ((and (eq system-type 'gnu/linux)
+       (string-match "Microsoft" (shell-command-to-string "uname -a")))
   (setq interprogram-cut-function
         (lambda (text &optional push)
           (let ((process-connection-type nil))
-            (let ((proc (start-process "xclip" nil "xclip" "-selection" "clipboard")))
-              (process-send-string proc text)
-              (process-send-eof proc)))))
+            (process-send-string (start-process "clip" nil "clip.exe") text))))
   (setq interprogram-paste-function
         (lambda ()
-          (let ((xclip-output (shell-command-to-string "xclip -o -selection clipboard")))
-            (unless (string= xclip-output "")
-              xclip-output)))))
+          (shell-command-to-string "powershell.exe -Command Get-Clipboard"))))
+
+ ;; CASE 2: Native Windows 10
+ ((eq system-type 'windows-nt)
+  (setq select-enable-clipboard t))
+
+ ;; CASE 3: Debian 13 (Standard Linux)
+ (t
+  (use-package xclip
+    :ensure t
+    :config
+    (xclip-mode 1))))
 
 ;; Startup Screen
 (setq inhibit-splash-screen t)
@@ -61,6 +70,18 @@
 (setq visual-line-fringe-indicators '(nil . nil))  ; Disable continuation arrows
 ;; Turn-off sounds
 (setq visible-bell t)
+
+;;; Calendar
+;; Start calendar on Monday
+(setq calendar-week-start-day 1)
+
+;; Optional: Bind calendar to a quick shortcut
+;(global-set-key (kbd "C-c C-t") 'calendar)
+
+;; Optional: Set your coordinates for sunrise/sunset (Example: Prague)
+(setq calendar-latitude 49.14)
+(setq calendar-longitude 15.01)
+(setq calendar-location-name "JH")
 
 ;; Return to recent edit file
 (recentf-mode 1)
@@ -148,8 +169,10 @@
 (evil-set-initial-state 'magit-mode 'emacs)
 
 ;;;  === Custom key bindings ====
-;(global-set-key (kbd "C-,") 'dupl-line)
-(global-set-key (kbd "C-<return>") 'compile)
+(global-set-key (kbd "C-,") 'dupl-line)
+;(global-set-key (kbd "C-<return>") 'compile)
+;(global-set-key (kbd "M-<return>") 'compile)
+(global-set-key (kbd "M-p") 'compile)
 (global-set-key (kbd "C-S-c") 'clipboard-kill-ring-save) ;; Copy
 (global-set-key (kbd "C-S-v") 'clipboard-yank)           ;; Paste
 (global-set-key (kbd "M-o") 'other-window)           ;; Tab windows
@@ -462,7 +485,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    '(company evil magit markdown-mode org-roam projectile request
-	     rfc-mode yasnippet)))
+	     rfc-mode xclip yasnippet)))
 
 ;;; Projectile
 (use-package projectile

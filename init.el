@@ -484,8 +484,8 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(company evil magit markdown-mode org-roam projectile request
-	     rfc-mode xclip yasnippet)))
+   '(agent-shell company evil gnuplot magit markdown-mode org-roam
+		 projectile request rfc-mode xclip yasnippet)))
 
 ;;; Projectile
 (use-package projectile
@@ -500,3 +500,29 @@
   (with-eval-after-load 'evil
     (define-key evil-normal-state-map (kbd "SPC p") 'projectile-command-map)))
 
+;;; GNU Plot
+(use-package gnuplot
+  :ensure t
+  :defer t
+  :bind (("M-C-g" . gnuplot-make-buffer))
+  :config
+  (setq gnuplot-program "gnuplot"))
+
+;;; Agent-Shell
+(use-package agent-shell
+  :ensure t
+  :config
+  ;; 1. Core Agent Settings
+  (setq agent-shell-default-agent 'opencode)
+  (setq agent-shell-opencode-acp-command '("opencode" "acp"))
+
+  ;; 2. Evil Keybindings (Must stay inside :config or use :hook)
+  (with-eval-after-load 'evil
+    (evil-define-key 'insert agent-shell-mode-map (kbd "RET") #'newline)
+    (evil-define-key 'normal agent-shell-mode-map (kbd "RET") #'comint-send-input))
+
+  ;; 3. Diff Buffer State
+  (add-hook 'diff-mode-hook
+            (lambda ()
+              (when (string-match-p "\\*agent-shell-diff\\*" (buffer-name))
+                (evil-emacs-state)))))

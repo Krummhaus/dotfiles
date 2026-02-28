@@ -111,6 +111,7 @@ fi
 # export EDITOR=vim
 # export PATH=$PATH:/snap/intellij-idea-community/560/plugins/Kotlin/kotlinc/bin
 # export PATH=$PATH:/opt/jdk-11/bin
+export PATH="/home/krumm/.local/bin:/home/krumm/.opencode/bin:$PATH"
 
 
 # Aliases

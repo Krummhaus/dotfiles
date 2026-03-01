@@ -6,7 +6,7 @@
 		       (emacs-init-time "%.2f")
 		       gcs-done)))
 
-;; Enable clipboard integration
+[6~];; Enable clipboard integration
 (setq select-enable-clipboard t)
 (setq evil-select-enable-clipboard t)
 
@@ -140,7 +140,7 @@
   :custom
   (evil-symbol-word-search t)
   :config
-  (evil-mode 1)
+  (evil-mode -1)
   (evil-set-undo-system 'undo-redo))
 
 ;; Evil imap jj <Esc>
@@ -169,7 +169,7 @@
 (evil-set-initial-state 'magit-mode 'emacs)
 
 ;;;  === Custom key bindings ====
-(global-set-key (kbd "C-,") 'dupl-line)
+(global-set-key (kbd "C-i") 'duplicate-line)
 ;(global-set-key (kbd "C-<return>") 'compile)
 ;(global-set-key (kbd "M-<return>") 'compile)
 (global-set-key (kbd "M-p") 'compile)

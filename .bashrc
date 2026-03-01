@@ -3,7 +3,7 @@
 # for examples
 
 # Set VIM keybindings to bash
-set -o vi
+# set -o vi # off 28.2.2026 tryng emacs keybindings
 
 # If not running interactively, don't do anything
 case $- in

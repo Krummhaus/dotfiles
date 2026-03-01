@@ -7,7 +7,7 @@ size = 12
 
 [font.normal]
 family = "Iosevka"
-style = "Light"
+style = "Regular"
 
 [font.bold]
 family = "Iosevka"
@@ -15,7 +15,7 @@ style = "Bold"
 
 [font.italic]
 family = "Iosevka"
-style = "Light Italic"
+style = "Italic"
 
 [terminal]
 osc52 = "CopyPaste"

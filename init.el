@@ -169,7 +169,9 @@
 (evil-set-initial-state 'magit-mode 'emacs)
 
 ;;;  === Custom key bindings ====
-(global-set-key (kbd "C-i") 'duplicate-line)
+;(global-set-key (kbd "C-t t") (lambda () (interactive) (insert "`")))
+;(global-set-key (kbd "C-t") (lambda () (interactive) (insert "~")))
+(global-set-key (kbd "C-o") 'duplicate-line)
 ;(global-set-key (kbd "C-<return>") 'compile)
 ;(global-set-key (kbd "M-<return>") 'compile)
 (global-set-key (kbd "M-p") 'compile)
@@ -485,7 +487,9 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    '(agent-shell company evil gnuplot magit markdown-mode org-roam
-		 projectile request rfc-mode xclip yasnippet)))
+		 projectile request rfc-mode xclip yasnippet))
+ '(safe-local-variable-values
+   '((eval org-sbe "emacs-tilde-bind") (org-babel-confirm-evaluate))))
 
 ;;; Projectile
 (use-package projectile

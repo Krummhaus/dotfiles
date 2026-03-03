@@ -394,6 +394,7 @@
  'org-babel-load-languages
  '((C . t)        ; Enable C
    ;(cpp . t)    ; Disable C++
+   (gnuplot . t)   ; GNU Plot
    (python . t)   ; Enable Python
    (sql . t)      ; Enable SQL
    (js . t)      ; Enable JS

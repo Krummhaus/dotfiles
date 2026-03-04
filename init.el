@@ -170,14 +170,24 @@
 
 ;;;  === Custom key bindings ====
 ;(global-set-key (kbd "C-t t") (lambda () (interactive) (insert "`")))
-;(global-set-key (kbd "C-t") (lambda () (interactive) (insert "~")))
-(global-set-key (kbd "C-o") 'duplicate-line)
+;(global-set-key (kbd "C-o") 'duplicate-line)
+(global-set-key (kbd "C-o") (lambda ()
+                              (interactive)
+                              (duplicate-line)
+                              (forward-line 1)))
+;(global-set-key (kbd "C-<return>") 'compile)
 ;(global-set-key (kbd "C-<return>") 'compile)
 ;(global-set-key (kbd "M-<return>") 'compile)
 (global-set-key (kbd "M-p") 'compile)
 (global-set-key (kbd "C-S-c") 'clipboard-kill-ring-save) ;; Copy
 (global-set-key (kbd "C-S-v") 'clipboard-yank)           ;; Paste
 (global-set-key (kbd "M-o") 'other-window)           ;; Tab windows
+(global-set-key (kbd "M-<return>") (lambda ()
+		(interactive)
+		(move-end-of-line 1)
+		(newline-and-indent)))
+
+
 
 ;; ===== prog languages =====
 ;;; c-mode c++-mode

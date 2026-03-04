@@ -177,6 +177,7 @@
                               (forward-line 1)))
 ;(global-set-key (kbd "C-<return>") 'compile)
 ;(global-set-key (kbd "C-<return>") 'compile)
+;(global-set-key (kbd "C-<return>") 'compile)
 ;(global-set-key (kbd "M-<return>") 'compile)
 (global-set-key (kbd "M-p") 'compile)
 (global-set-key (kbd "C-S-c") 'clipboard-kill-ring-save) ;; Copy
@@ -187,7 +188,10 @@
 		(move-end-of-line 1)
 		(newline-and-indent)))
 
-
+;;; Mark Ring 
+(setq mark-ring-max 6)
+(setq global-mark-ring-max 8)
+(setq-default set-mark-command-repeat-pop t)
 
 ;; ===== prog languages =====
 ;;; c-mode c++-mode
@@ -290,7 +294,7 @@
   (setq company-idle-delay 0.2)
   (setq minimum-prefix-length 2)
   (setq company-global-modes '(not processing-mode text-mode)) ;; Not use company on those modes
-  (add-to-list 'company-backends 'company-c-headers) ;; Backend for header files
+  (add-to-list 'company-backends 'company-c-headers) ;; Backend for  header files
   (add-to-list 'company-backends 'company-elisp)
   (when (boundp 'company-backends)
     (make-local-variable 'company-backends)

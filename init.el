@@ -1,4 +1,5 @@
 ;;; Startup
+;;; Startup
 (setq gc-cons-treshold (* 100 1000 1000))
 (add-hook 'emacs-startup-hook
 	  #'(lambda ()
@@ -6,7 +7,7 @@
 		       (emacs-init-time "%.2f")
 		       gcs-done)))
 
-[6~];; Enable clipboard integration
+;; Enable clipboard integration
 (setq select-enable-clipboard t)
 (setq evil-select-enable-clipboard t)
 
@@ -336,74 +337,138 @@
   ;;:ensure t)
 
 
-;;; Define the duplicate-line function
-(defun dupl-line ()
-  "Duplicate the current line."
+;;; Utility function
+(defun my/org-wrap-with-code ()
+  "Wrap the active region with tildes."
   (interactive)
-  (let ((text (buffer-substring (line-beginning-position) (line-end-position))))
-    (end-of-line)
-    (newline)
-    (insert text)))
+  (if (use-region-p)
+      (let ((beg (region-beginning))
+            (end (region-end)))
+        (save-excursion
+          (goto-char end) (insert "~")
+          (goto-char beg) (insert "~"))
+        (setq deactivate-mark t)
+        (when (derived-mode-p 'org-mode)
+          (org-restart-font-lock)))
+    (message "Select some text first!")))
 
-;;; Org-Mode
+(with-eval-after-load 'org
+  (define-key org-mode-map (kbd "C-c t") #'my/org-wrap-with-code))
+
+
+;;; ----------------------------------------------------------
+;;; Org Mode + PDF Tools Setup (Emacs 30)
+;;; ----------------------------------------------------------
+
+;;; Org Mode
 (use-package org
-    :ensure t
-    :config
-    ;; For code-blocks insentation
-    ;; Make sure org file code highlights correctly
-    (setq org-src-fontify-natively t)
-    ;;(setq org-src-tab-acts-natively t) ; TAB-ing in code-blocks
-    (setq org-src-fontify-natively t
-        org-src-window-setup 'current-window ;; edit in current window
+  :ensure t
+  :config
+  ;; Inline code styling
+  (set-face-attribute 'org-code nil
+                      :background "#2e2e2e"
+                      :foreground "#996515"
+                      :weight 'bold)
+
+  ;; Code block behavior
+  (setq org-src-fontify-natively t
+        org-src-window-setup 'current-window
         org-src-strip-leading-and-trailing-blank-lines t
-        org-src-preserve-indentation t ;; do not put two spaces on the left
-        org-src-tab-acts-natively t)
-    (setq org-confirm-babel-evaluate nil) ; Dont ask to evaluate code
-    (setq org-todo-keywords '(
-    (sequence "TODO" "In Progress" "|" "Waiting" "DONE" "Completed")
-    (sequence "Queue" "Working On" "On Hold" "|" "Finished" "Worked On" "Removed")))
-    ;; Set margins in Org mode
-    (add-hook 'org-mode-hook
-          (lambda ()
-            (setq-local left-margin-width 2
-                        right-margin-width 2)
-            (set-window-buffer nil (current-buffer)))) ;; refresh margins
-    )
+        org-src-preserve-indentation t
+        org-src-tab-acts-natively t
+        org-confirm-babel-evaluate nil)
 
-;; TAB in org-mode oveeriding evil-mode
-(defun my-tab ()
-  "Custom TAB behavior: Org-mode cycles, otherwise evil-jump-forward."
-  (interactive)
-  (if (derived-mode-p 'org-mode)
-      (org-cycle)
-    (evil-jump-forward)))
+  ;; TODO keywords
+  (setq org-todo-keywords
+        '((sequence "TODO" "In Progress" "|" "Waiting" "DONE" "Completed")
+          (sequence "Queue" "Working On" "On Hold" "|" "Finished" "Worked On" "Removed")))
 
-;; Remap TAB in evil-motion-state-map to our wrapper
-(define-key evil-motion-state-map (kbd "TAB") #'my-tab)
+  ;; Use relative file paths for links
+  (setq org-link-file-path-type 'relative)
 
-;; Org Tags
+  ;; Org buffer margins
+  (add-hook 'org-mode-hook
+            (lambda ()
+              (setq-local left-margin-width 2
+                          right-margin-width 2)
+              (set-window-buffer nil (current-buffer)))))
+
+;; Global keybinding to store links
+(global-set-key (kbd "C-c l") #'org-store-link)
+
+
+;;; ----------------------------------------------------------
+;;; Org Heading Appearance
+;;; ----------------------------------------------------------
+
 (custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
  '(markdown-header-face ((t (:inherit font-lock-type-face :weight semi-bold))))
  '(markdown-header-face-1 ((t (:inherit markdown-header-face :height 1.7))))
  '(markdown-header-face-2 ((t (:inherit markdown-header-face :height 1.4))))
  '(markdown-header-face-3 ((t (:inherit markdown-header-face :height 1.2))))
+
  '(org-level-1 ((t (:foreground "#FFA600" :weight bold :height 1.35))))
  '(org-level-2 ((t (:foreground "#FF6361" :weight semi-bold :height 1.2))))
  '(org-level-3 ((t (:foreground "#BC5090" :weight semi-bold :height 1.1))))
  '(org-level-4 ((t (:foreground "#58508D" :weight semi-bold :height 1.05))))
  '(org-level-5 ((t (:foreground "#003F5C" :weight semi-bold :height 1.0))))
+
  '(org-tag ((t (:inherit shadow :weight normal :slant italic)))))
 
-;;; Custom headings that inherit color form default
-;; https://htmlcolorcodes.com/color-wheel/
 
- 
+;;; ----------------------------------------------------------
+;;; Windows PATH Fix for pdf-tools
+;;; ----------------------------------------------------------
 
+(when (eq system-type 'windows-nt)
+  (setenv "PATH"
+          (concat
+           "C:\\Users\\asus\\scoop\\apps\\msys2\\current\\mingw64\\bin;"
+           "C:\\Users\\asus\\scoop\\apps\\msys2\\current\\usr\\bin;"
+           (getenv "PATH")))
+  (add-to-list 'exec-path
+               "C:/Users/asus/scoop/apps/msys2/current/mingw64/bin"))
+
+
+;;; ----------------------------------------------------------
+;;; PDF Tools
+;;; ----------------------------------------------------------
+
+(use-package pdf-tools
+  :ensure t
+  :config
+  (pdf-tools-install)
+  (add-to-list 'auto-mode-alist '("\\.pdf\\'" . pdf-view-mode)))
+
+
+;;; ----------------------------------------------------------
+;;; Org ↔ PDF integration
+;;; ----------------------------------------------------------
+(use-package org-pdftools
+  :ensure t
+  :after (org pdf-tools)
+  :config
+  ;; Proper pdf: link registration
+  (org-link-set-parameters "pdf"
+                           :store #'org-pdftools-store-link
+                           :follow (lambda (link)
+                                     (let* ((parts (split-string link "::"))
+                                            (file (car parts))
+                                            (page (when (cadr parts)
+                                                    (string-to-number
+                                                     (car (split-string (cadr parts) "++"))))))
+                                       ;; open PDF in vertical split
+                                       (select-window (split-window-right))
+                                       (find-file file)
+                                       (when (and (fboundp 'pdf-view-goto-page) page)
+                                         (pdf-view-goto-page page))))))
+
+
+
+
+;;; ----------------------------------------------------------
 ;;; Org-Babel
+;;; ----------------------------------------------------------
 (org-babel-do-load-languages
  'org-babel-load-languages
  '((C . t)        ; Enable C
@@ -501,8 +566,10 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(agent-shell company evil gnuplot magit markdown-mode org-roam
-		 projectile request rfc-mode xclip yasnippet))
+   '(agent-shell annalist auto-compile command-log-mode elpy evil-leader
+		 evil-surround gnuplot go-mode gptel ivy lv magit
+		 markdown-mode ol-pdfview org-ai org-roam pdf-tools
+		 projectile request rfc-mode use-package which-key))
  '(safe-local-variable-values
    '((eval org-sbe "emacs-tilde-bind") (org-babel-confirm-evaluate))))
 
@@ -545,3 +612,4 @@
             (lambda ()
               (when (string-match-p "\\*agent-shell-diff\\*" (buffer-name))
                 (evil-emacs-state)))))
+

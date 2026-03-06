@@ -1,5 +1,4 @@
 ;;; Startup
-;;; Startup
 (setq gc-cons-treshold (* 100 1000 1000))
 (add-hook 'emacs-startup-hook
 	  #'(lambda ()
@@ -366,8 +365,8 @@
   :config
   ;; Inline code styling
   (set-face-attribute 'org-code nil
-                      :background "#2e2e2e"
-                      :foreground "#996515"
+                      ;:background "#2e2e2e"
+                      ;:foreground "#996515"
                       :weight 'bold)
 
   ;; Code block behavior
@@ -401,19 +400,18 @@
 ;;; Org Heading Appearance
 ;;; ----------------------------------------------------------
 
-(custom-set-faces
- '(markdown-header-face ((t (:inherit font-lock-type-face :weight semi-bold))))
- '(markdown-header-face-1 ((t (:inherit markdown-header-face :height 1.7))))
- '(markdown-header-face-2 ((t (:inherit markdown-header-face :height 1.4))))
- '(markdown-header-face-3 ((t (:inherit markdown-header-face :height 1.2))))
+;; (custom-set-faces
+;;  '(markdown-header-face ((t (:inherit font-lock-type-face :weight semi-bold))))
+;;  '(markdown-header-face-1 ((t (:inherit markdown-header-face :height 1.7))))
+;;  '(markdown-header-face-2 ((t (:inherit markdown-header-face :height 1.4))))
+;;  '(markdown-header-face-3 ((t (:inherit markdown-header-face :height 1.2))))
+;;  '(org-level-1 ((t (:foreground "#FFA600" :weight bold :height 1.35))))
+;;  '(org-level-2 ((t (:foreground "#FF6361" :weight semi-bold :height 1.2))))
+;;  '(org-level-3 ((t (:foreground "#BC5090" :weight semi-bold :height 1.1))))
+;;  '(org-level-4 ((t (:foreground "#58508D" :weight semi-bold :height 1.05))))
+;;  '(org-level-5 ((t (:foreground "#003F5C" :weight semi-bold :height 1.0))))
 
- '(org-level-1 ((t (:foreground "#FFA600" :weight bold :height 1.35))))
- '(org-level-2 ((t (:foreground "#FF6361" :weight semi-bold :height 1.2))))
- '(org-level-3 ((t (:foreground "#BC5090" :weight semi-bold :height 1.1))))
- '(org-level-4 ((t (:foreground "#58508D" :weight semi-bold :height 1.05))))
- '(org-level-5 ((t (:foreground "#003F5C" :weight semi-bold :height 1.0))))
-
- '(org-tag ((t (:inherit shadow :weight normal :slant italic)))))
+;;  '(org-tag ((t (:inherit shadow :weight normal :slant italic)))))
 
 
 ;;; ----------------------------------------------------------
@@ -613,3 +611,5 @@
               (when (string-match-p "\\*agent-shell-diff\\*" (buffer-name))
                 (evil-emacs-state)))))
 
+;;; Emacs browser customization
+(setq eww-search-prefix "https://duckduckgo.com/lite/?q=")

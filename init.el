@@ -473,6 +473,7 @@
    ;(cpp . t)    ; Disable C++
    (gnuplot . t)   ; GNU Plot
    (python . t)   ; Enable Python
+   (plantuml . t)   ; UML
    (sql . t)      ; Enable SQL
    (js . t)      ; Enable JS
    ;; Add other languages as needed
@@ -613,3 +614,26 @@
 
 ;;; Emacs browser customization
 (setq eww-search-prefix "https://duckduckgo.com/lite/?q=")
+
+;;; PlantUML and Graphwiz
+(if (eq system-type 'windows-nt)
+    ;; --- WINDOWS CONFIG ---
+    (progn
+      (setq plantuml-java-command "C:/Users/asus/.jdks/openjdk-25.0.2/bin/java.exe")
+      (setq org-plantuml-jar-path "C:/tools/plantuml.jar")
+      ;; Only needed if not in PATH
+      (setq org-plantuml-dot-executable "C:/Program Files/Graphviz/bin/dot.exe"))
+
+  ;; --- LINUX (DEBIAN 13) CONFIG ---
+  (progn
+    ;; On Debian, if you install via 'sudo apt install plantuml', 
+    ;; it usually installs the jar to /usr/share/plantuml/plantuml.jar
+    (setq org-plantuml-jar-path "/usr/share/plantuml/plantuml.jar")
+    ;; Java is usually in the path on Linux, so this is often optional
+    (setq plantuml-java-command "java")))
+
+;; --- GLOBAL SETTINGS (Applied to both) ---
+(setq org-plantuml-exec-mode 'jar)
+
+;; Refresh images in Org-mode automatically
+(add-hook 'org-babel-after-execute-hook 'org-redisplay-inline-images)
